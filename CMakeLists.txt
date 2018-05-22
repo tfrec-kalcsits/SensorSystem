@@ -20,6 +20,20 @@ file(GLOB_RECURSE ARDUINO_CORE_SRC
     ${ARDUINO_PATH}/cores/arduino/*.cpp
 )
 
+#Remove large unnecessary files from source to save space
+list(REMOVE_ITEM ARDUINO_CORE_SRC 
+    ${ARDUINO_PATH}/cores/arduino/WString.cpp
+    ${ARDUINO_PATH}/cores/arduino/Tone.cpp
+    ${ARDUINO_PATH}/cores/arduino/Stream.cpp
+    ${ARDUINO_PATH}/cores/arduino/Print.cpp
+    ${ARDUINO_PATH}/cores/arduino/HardwareSerial.cpp
+    ${ARDUINO_PATH}/cores/arduino/HardwareSerial0.cpp
+    ${ARDUINO_PATH}/cores/arduino/HardwareSerial1.cpp
+    ${ARDUINO_PATH}/cores/arduino/HardwareSerial2.cpp
+    ${ARDUINO_PATH}/cores/arduino/HardwareSerial3.cpp
+    ${ARDUINO_PATH}/cores/arduino/main.cpp
+)
+
 #RF24 requires SPI.h
 set(SPI_PATH ${ARDUINO_PATH}/libraries/SPI/src)
 set(SPI_SRC ${SPI_PATH}/SPI.cpp)
