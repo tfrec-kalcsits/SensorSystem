@@ -1,6 +1,0 @@
-[submodule "thirdparty/arduinoCore-avr"]
-	path = thirdparty/arduinoCore-avr
-	url = https://github.com/arduino/ArduinoCore-avr.git
-[submodule "thirdparty/RF24"]
-	path = thirdparty/RF24
-	url = https://github.com/nRF24/RF24.git
