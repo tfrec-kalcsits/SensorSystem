@@ -6,7 +6,7 @@
  * @date 2018-05-22
  */
 
-#include <rf24radioreceiver.h>
+#include "rf24radioreceiver.h"
 
 namespace sensornetwork
 {

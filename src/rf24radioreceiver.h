@@ -2,11 +2,12 @@
 #define SENSORNETWORK_RF24RADIORECEIVER_H
 
 #include "radioreceiver.h"
+
 #ifndef ARDUINO
-    #include <byte.h>
+    #include "byte.h"
 #endif
 
-#include <RF24.h>
+#include "../thirdparty/RF24/RF24.h"
 
 /**
  * @brief Contains the driver class for the RF24 radio receiver.
