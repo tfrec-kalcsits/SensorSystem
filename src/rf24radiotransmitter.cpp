@@ -1,4 +1,5 @@
 #include "rf24radiotransmitter.h"
+#include "packet.h"
 
 namespace sensornetwork
 {

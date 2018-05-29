@@ -16,6 +16,8 @@
     #include "byte.h"
 #endif
 
+#include "radiotransmitter.h"
+
 namespace sensornetwork
 {
 
@@ -23,7 +25,7 @@ class RF24RadioTransmitter : public RadioTransmitter
 {
     public:
     RF24RadioTransmitter(uint16_t gpio, uint16_t ce, byte pipe[]);
-    bool sendPacket(const Packet& packet);
+    bool sendPacket(const sensornetwork::Packet& packet);
 
     private:
     RF24 radio;
