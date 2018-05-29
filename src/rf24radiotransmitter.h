@@ -16,8 +16,6 @@
     #include "byte.h"
 #endif
 
-#include <RF24.h>
-
 namespace sensornetwork
 {
 
