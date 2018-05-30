@@ -7,7 +7,7 @@
     #include "byte.h"
 #endif
 
-#include "../thirdparty/RF24/RF24.h"
+#include <RF24.h>
 
 /**
  * @brief Contains the driver class for the RF24 radio receiver.

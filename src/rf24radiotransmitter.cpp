@@ -12,6 +12,7 @@ RF24RadioTransmitter::RF24RadioTransmitter(uint16_t gpio, uint16_t ce, byte pipe
     radio.openWritingPipe(pipe);
     radio.setPayloadSize(sizeof(Packet));
     radio.powerDown();
+    radio.setPALevel(RF24_PA_LOW);
 }
 
 bool RF24RadioTransmitter::sendPacket(const Packet& packet)

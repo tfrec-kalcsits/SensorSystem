@@ -20,6 +20,7 @@ RF24RadioReceiver::RF24RadioReceiver(uint16_t gpio, uint16_t ce, byte pipes[][6]
         radio.openReadingPipe(i + 1, pipes[i]);
     radio.startListening();
     radio.setPayloadSize(sizeof(Packet));
+    radio.setPALevel(RF24_PA_MIN);
 }
 
 bool RF24RadioReceiver::isPacketAvailable()

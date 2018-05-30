@@ -10,7 +10,7 @@
 #ifndef SENSORNETWORK_RF24RADIOTRANSMITTER_H
 #define SENSORNETWORK_RF24RADIOTRANSMITTER_H
 
-#include "../thirdparty/RF24/RF24.h"
+#include <RF24.h>
 
 #ifndef ARDUINO
     #include "byte.h"
