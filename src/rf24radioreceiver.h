@@ -34,6 +34,7 @@ class RF24RadioReceiver : public RadioReceiver
 
     private:
     RF24 radio;
+    byte last_pipe;
 };
 
 }
