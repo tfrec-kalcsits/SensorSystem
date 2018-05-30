@@ -28,7 +28,7 @@ namespace sensornetwork
 class RF24RadioReceiver : public RadioReceiver
 {
     public:
-    RF24RadioReceiver(uint16_t gpio, uint16_t ce, byte pipes[][6], int num_pipes);
+    RF24RadioReceiver(uint16_t ce, uint16_t csn, byte pipes[][6], int num_pipes);
     bool isPacketAvailable();
     Packet getPacket();
 

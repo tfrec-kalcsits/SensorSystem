@@ -7,12 +7,12 @@
 
 using namespace sensornetwork;
 
-byte pipes[1][6] = {"1NODE"};
+byte pipes[1][6] = {"00001"};
 RadioReceiver * receiver;
 
 void setup() {
-  receiver = new RF24RadioReceiver(9, 10, pipes, 1);
-  Serial.begin(9600);  
+  Serial.begin(9600);
+  receiver = new RF24RadioReceiver(7, 8, pipes, 1);  
 
 }
 

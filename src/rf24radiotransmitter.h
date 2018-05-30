@@ -24,7 +24,7 @@ namespace sensornetwork
 class RF24RadioTransmitter : public RadioTransmitter
 {
     public:
-    RF24RadioTransmitter(uint16_t gpio, uint16_t ce, byte pipe[]);
+    RF24RadioTransmitter(uint16_t ce, uint16_t csn, byte pipe[]);
     bool sendPacket(const sensornetwork::Packet& packet);
 
     private:
