@@ -1,5 +1,5 @@
-#include <sensors/tempsensor.h>
-#include <sensors/mlxsensor.h>
+#include <tempsensor.h>
+#include <mlxsensor.h>
 
 using namespace sensorsystem;
 
