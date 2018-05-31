@@ -1,5 +1,5 @@
-#include <tempsensor.h>
-#include <mlxsensor.h>
+#include <sensors/tempsensor.h>
+#include <sensors/mlxsensor.h>
 
 using namespace sensorsystem;
 
@@ -14,9 +14,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("====================================")
+  Serial.println("====================================");
   Serial.print("AMBIENT: ");
   Serial.println(mlx.getAmbientTemperature());
   Serial.print("OBJECT: ");
   Serial.println(mlx.getObjectTemperature());
+  delay(1000);
 }
