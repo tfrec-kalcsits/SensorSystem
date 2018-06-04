@@ -2,7 +2,7 @@
 #include <radiotransmitter.h>
 #include <rf24radioreceiver.h>
 #include <rf24radiotransmitter.h>
-using namespace sensornetwork;
+using namespace sensorsystem;
 
 RadioTransmitter * transmitter;
 int ambient;

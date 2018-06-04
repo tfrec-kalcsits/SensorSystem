@@ -8,7 +8,7 @@
 
 #include "rf24radioreceiver.h"
 
-namespace sensornetwork
+namespace sensorsystem
 {
 
 RF24RadioReceiver::RF24RadioReceiver(uint16_t ce, uint16_t csn, byte pipes[][6], int num_pipes) : radio(ce, csn)

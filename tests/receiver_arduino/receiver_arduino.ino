@@ -5,7 +5,7 @@
 #include <rf24radioreceiver.h>
 #include <rf24radiotransmitter.h>
 
-using namespace sensornetwork;
+using namespace sensorsystem;
 
 byte pipes[1][6] = {"00001"};
 RadioReceiver * receiver;

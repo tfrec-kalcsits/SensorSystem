@@ -1,5 +1,5 @@
-#ifndef SENSORNETWORK_RF24RADIORECEIVER_H
-#define SENSORNETWORK_RF24RADIORECEIVER_H
+#ifndef SENSORSYSTEM_RF24RADIORECEIVER_H
+#define SENSORSYSTEM_RF24RADIORECEIVER_H
 
 #include "radioreceiver.h"
 
@@ -17,7 +17,7 @@
  * @date 2018-05-21
  */
 
-namespace sensornetwork
+namespace sensorsystem
 {
 
 /**

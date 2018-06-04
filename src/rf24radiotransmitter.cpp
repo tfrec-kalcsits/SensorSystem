@@ -1,7 +1,7 @@
 #include "rf24radiotransmitter.h"
 #include "packet.h"
 
-namespace sensornetwork
+namespace sensorsystem
 {
 
 RF24RadioTransmitter::RF24RadioTransmitter(uint16_t ce, uint16_t csn, byte pipe[])

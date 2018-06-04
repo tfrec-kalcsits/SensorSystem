@@ -1,5 +1,5 @@
-#ifndef SENSORNETWORK_RADIORECEIVER_H
-#define SENSORNETWORK_RADIORECEIVER_H
+#ifndef SENSORSYSTEM_RADIORECEIVER_H
+#define SENSORSYSTEM_RADIORECEIVER_H
 
 #include "packet.h"
 
@@ -11,7 +11,7 @@
  * @date 2018-05-21
  */
 
-namespace sensornetwork
+namespace sensorsystem
 {
 
 ///The abstract interface for a receiving radio in the sensor system.

@@ -1,5 +1,5 @@
-#ifndef SENSORNETWORK_PACKET_H
-#define SENSORNETWORK_PACKET_H
+#ifndef SENSORSYSTEM_PACKET_H
+#define SENSORSYSTEM_PACKET_H
 /**
  * @brief This header file includes the definition for the Packet struct that
  * will be sent between the RadioReceivers and RadioTransmitters
@@ -9,7 +9,7 @@
  * @date 2018-05-21
  */
 
-namespace sensornetwork
+namespace sensorsystem
 {
 
 /**
