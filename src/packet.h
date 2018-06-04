@@ -19,12 +19,12 @@ namespace sensorsystem
 struct Packet
 {
     ///Enum used to specify the type of packet/command.
-    enum class Flag { LOG, UPLOAD, TEST, CONNECT, DISCONNECT, UPDATE };
+    enum class Flag { LOG, UPLOAD, TEST, CONNECT, DISCONNECT};
     
     ///The flag for the type of packet/command.
     Flag flag;
     ///Ambient and object temperatures recorded by the sensor.
-    float ambient_temperature, object_temperature;
+    float ambient_temperature, object_temperature, lux;
     ///Each Packet will have a unique signature that will be recorded along with the measurements.
     ///This can be used for readability and to determine what the sensor was recording.
     char signature[10];
