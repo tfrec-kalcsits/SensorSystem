@@ -9,15 +9,13 @@
 #ifndef SENSORSYSTEM_SENSOR_LIGHTSENSOR_H
 #define SENSORSYSTEM_SENSOR_LIGHTSENSOR_H
 
-#include <stdint.h>
-
 namespace sensorsystem
 {
 
 class LightSensor
 {
     public:
-    virtual int32_t getLux() = 0;
+    virtual float getLux() = 0;
 };
 
 }

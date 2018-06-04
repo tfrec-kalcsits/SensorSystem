@@ -2,20 +2,26 @@
 #define SENSORSYSTEM_SENSOR_CORE_TSLSENSOR
 
 #include <Adafruit_TSL2561_U.h>
+#include <Adafruit_Sensor.h>
 
 #include "lightsensor.h"
+
+namespace sensorsystem
+{
 
 class TSLSensor : public LightSensor
 {
     public:
-    enum class Address {BASE=0x39, GROUND=0x29, VCC=0x49};
+    static const uint8_t base_address = 0x39;
 
-    TSLSensor(Address address=Address::BASE);
-    int32_t getLux();
+    TSLSensor(uint8_t address=base_address);
+    float getLux();
+    bool begin();
 
     private:
-    Adafruit_TSL2561_U sensor;
+    Adafruit_TSL2561_Unified sensor;
 };
 
+}
 
 #endif

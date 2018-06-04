@@ -1,15 +1,23 @@
 #include "tslsensor.h"
 
-TSLSensor::TSLSensor(Address address) : sensor(static_cast<uint8_t>(address), 1)
+namespace sensorsystem
+{
+
+TSLSensor::TSLSensor(uint8_t address) : sensor(address, 12345)
+{
+    sensor.enableAutoRange(true);
+};
+
+bool TSLSensor::begin()
 {
     sensor.begin();
-    sensor.enableAutoRange(true);
-    sensor.setIntegrationTime(TSL_INTEGRATIONTIME_13MS);
 }
 
-uint32_t TSLSensor::getLux()
+float TSLSensor::getLux()
 {
-    uint16_t broadband, ir;
-    sensor.getLuminosity(&broadband, &ir);
-    return sensor.calculateLux(broadband, ir);
+    sensors_event_t event;
+    sensor.getEvent(&event);
+    return event.light;
+}
+
 }
