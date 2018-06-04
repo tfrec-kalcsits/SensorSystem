@@ -23,3 +23,9 @@ fi
 
 #install the core sensor library from Adafruit
 [[ -d "${lib_path}Adafruit_Sensor" ]] || git clone https://github.com/adafruit/Adafruit_Sensor.git "${lib_path}Adafruit_Sensor"
+
+#install the SensorSystem-Networking library
+[[ -d "${lib_path}SensorSystem-Networking" ]] || git clone https://github.com/tfrec-kalcsits/SensorSystem-Networking.git "${lib_path}SensorSystem-Networking"
+
+#run the install script for SensorSystem-Networking
+bash "${lib_path}SensorSystem-Networking/setup_arduino.sh" "${lib_path}"
