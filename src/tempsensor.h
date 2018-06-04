@@ -19,6 +19,8 @@ class TempSensor
     virtual float getAmbientTemperature() = 0;
     virtual float getObjectTemperature() = 0;
     void setScale(Scale scale);
+    
+    virtual ~TempSensor() = default;
 
     protected:
     Scale scale;
