@@ -13,14 +13,15 @@ namespace sensorsystem
 class SensorCore
 {
     public:
-    SensorCore(TempSensor *t, LightSensor *l, RadioTransmitter *r, char *signature="no sig");
-    bool makeRequest(Packet::Flag flag)
+    SensorCore(TempSensor &t, LightSensor &l, RadioTransmitter &r, char *signature="no sig");
+    bool makeRequest(Packet::Flag flag);
+    void setSignature(char * signature);
 
     private:
-    TempSensor *temp_sensor;
-    LightSensor *light_sensor;
-    RadioTransmitter *radio;
-    char[10] signature;
+    TempSensor& temp_sensor;
+    LightSensor& light_sensor;
+    RadioTransmitter& radio;
+    char signature[10];
 };
 
 }

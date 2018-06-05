@@ -3,7 +3,7 @@
 namespace sensorsystem
 {
 
-SensorCore::SensorCore(TempSensor *t, LightSensor *l, RadioTransmitter *r)
+SensorCore::SensorCore(TempSensor &t, LightSensor &l, RadioTransmitter &r)
     : temp_sensor(t), light_sensor(l), radio(r)
 {
     for(int i = 0; i < 10 && signature[i] != '\0'; i++)
@@ -16,9 +16,9 @@ bool SensorCore::makeRequest(Packet::Flag flag)
     packet.flag = flag;
     if(flag == Packet::Flag::LOG)
     {
-        float ambient = temp_sensor->getAmbientTemperature();
-        float object = temp_sensor->getObjectTemperature();
-        float lux = light_sensor->getLux();
+        float ambient = temp_sensor.getAmbientTemperature();
+        float object = temp_sensor.getObjectTemperature();
+        float lux = light_sensor.getLux();
 
         packet.ambient_temperature = ambient;
         packet.object_temperature = object;
@@ -28,6 +28,12 @@ bool SensorCore::makeRequest(Packet::Flag flag)
     }
 
     return radio->sendPacket(packet);
+}
+
+void SensorCore::setSignature(char * signature)
+{
+    for(int i = 0; i < 10 & signature[i] != '\0'; i++)
+        this->signature[i] = signature[i];
 }
 
 }
