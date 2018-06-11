@@ -9,3 +9,5 @@ struct Measurement
     std::string signature;
     tm timestamp;
 };
+
+tm getTimestamp();
