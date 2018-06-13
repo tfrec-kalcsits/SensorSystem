@@ -20,7 +20,7 @@ class ThreadProcess
     void endThreadProcess();
 
     protected:
-    virtual void thread_function() = 0;
+    virtual void threadFunction() = 0;
 
     private:
     std::thread proc_thread;

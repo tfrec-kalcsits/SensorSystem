@@ -12,14 +12,14 @@ class CommandScheduler : public ThreadProcess
 {
     public:
     CommandScheduler();
-    void scheduleCommand(std::unique_ptr<Command> command);
+    void scheduleCommand(std::shared_ptr<Command> command);
     
     private:
     void threadFunction() override;
 
     std::thread dispatch_thread;
     std::mutex queue_lock;
-    std::priority_queue<Command> queue;
+    std::priority_queue<shared_ptr<Command>> queue;
     std::atomic_bool quit_thread = true;
 }
 
