@@ -10,9 +10,9 @@ DropboxStorage::DropboxStorage(std::string oauth_access_token, std::string uploa
 
 bool DropboxStorage::syncFiles()
 {
-    std::fstream sync_file(prefix_path + ".sync", std::ios::in);
     std::vector<std::string> unsynced_files;
     std::string buffer;
+    std::fstream sync_file(prefix_path + ".sync", std::ios::in);
     while(getline(sync_file, buffer))
         unsynced_files.push_back(std::move(buffer));
     sync_file.close();
