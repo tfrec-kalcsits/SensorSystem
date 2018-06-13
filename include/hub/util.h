@@ -1,7 +1,0 @@
-#include <ctime>
-
-namespace sensorsystem
-{
-
-
-}
