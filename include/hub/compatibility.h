@@ -25,13 +25,31 @@ namespace sensorsystem::sv
     using std::string_view;
 }
 
-#elif __has_include(<experimental/filesystem>)
+#elif __has_include(<experimental/string_view>)
 #include <experimental/filesystem>
-namespace sensorsystem::fs
+namespace sensorsystem::sv
 {
     using std::experimental::string_view;
 }
 
 #else
-#error "Error: An implementation of filesystem is required."
+#error "Error: An implementation of string_view is required."
+#endif
+
+#if __has_include(<optional>)
+#include <string_view>
+namespace sensorsystem::opt
+{
+    using std::optional;
+}
+
+#elif __has_include(<experimental/optional>)
+#include <experimental/filesystem>
+namespace sensorsystem::opt
+{
+    using std::experimental::optional;
+}
+
+#else
+#error "Error: An implementation of optional is required."
 #endif

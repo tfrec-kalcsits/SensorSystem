@@ -1,5 +1,5 @@
 #include <chrono>
-#include <hub/data/measurement.h>
+#include <hub/measurement.h>
 
 namespace sensorsystem
 {
