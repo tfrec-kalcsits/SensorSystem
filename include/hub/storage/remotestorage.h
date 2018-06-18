@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string_view>
 #include <hub/compatibility.h>
 
 namespace sensorsystem

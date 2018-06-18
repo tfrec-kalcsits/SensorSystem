@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include <hub/data/measurement.h>
+#include <hub/measurement.h>
 
 namespace sensorsystem
 {

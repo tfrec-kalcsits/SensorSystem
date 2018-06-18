@@ -1,7 +1,5 @@
 #pragma once
 
-#include <hub/internet/internetdevice.h>
-
 namespace sensorsystem
 {
 
