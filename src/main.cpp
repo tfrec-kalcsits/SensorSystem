@@ -25,15 +25,17 @@ using std::launch;
 using std::move;
 using std::queue;
 
-struct requeust
-{
-    enum Type {LOG, UPLOAD, CONNECT, TEST, DISCONNECT};
-    Type type;
-    opt::optional<Measurement> measurement;
-}
+
 
 int main()
 {
+    struct requeust
+    {
+        enum Type {LOG, UPLOAD, CONNECT, TEST, DISCONNECT};
+        Type type;
+        opt::optional<Measurement> measurement;
+    };
+    
     //check if config file exists
     if(!fs::exists("~/.sensorsystem.ini"))
     {
