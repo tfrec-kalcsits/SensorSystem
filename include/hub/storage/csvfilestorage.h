@@ -12,7 +12,7 @@ namespace sensorsystem
 class CSVFileStorage : public FileStorage
 {
     public:
-    CSVFileStorage(std::string prefix_path="~/home/.hub/");
+    CSVFileStorage(std::string prefix_path);
 
     bool recordMeasurementToFile(const Measurement& measurement) override;
 

@@ -28,8 +28,7 @@ opt::optional<std::string> CursesUI::read()
     bool quit = false;
     while(!quit)
     {
-        int ch = wgetch(in);
-        switch(ch)
+        switch(int ch = wgetch(in))
         {
             case ERR: quit = true;
                 break;
@@ -37,6 +36,8 @@ opt::optional<std::string> CursesUI::read()
                 input.push(buffer);
                 buffer = "";
                 werase(in);
+                wrefresh(in);
+                waddstr(in, "> ");
                 break;
             default:
                 buffer += (char)ch;

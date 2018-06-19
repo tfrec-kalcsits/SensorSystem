@@ -53,3 +53,22 @@ namespace sensorsystem::opt
 #else
 #error "Error: An implementation of optional is required."
 #endif
+
+
+#if __has_include(<variant>)
+#include <variant>
+namespace sensorsystem::var
+{
+    using std::variant;
+}
+
+#elif __has_include(<experimental/variant>)
+#include <experimental/variant>
+namespace sensorsystem::var
+{
+    using std::experimental::variant;
+}
+
+#else
+#error "Error: An implementation of variant is required."
+#endif

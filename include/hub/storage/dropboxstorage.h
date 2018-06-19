@@ -10,7 +10,7 @@ namespace sensorsystem
 class DropboxStorage : public RemoteStorage
 {
     public:
-    DropboxStorage(std::string oauth_access_token, std::string upload_path, std::string prefix_path="~/home/.hub/");
+    DropboxStorage(std::string oauth_access_token, std::string upload_path, std::string prefix_path);
     bool syncFiles() override;
 
     private:
