@@ -28,9 +28,9 @@ all: libsensorsystem-networking.so
 install: all
 	@$(ECHO) installing headers to /usr/local/include/sensorsystem/networking
 	@mkdir -p /usr/local/include/sensorsystem/networking
-	@cp ./src/*.h /usr/local/include/sensorsystem/networking/
+	@install -m 0644 ./src/*.h /usr/local/include/sensorsystem/networking/
 	@$(ECHO) installing libs to /usr/local/lib
-	@cp ./libsensorsystem-networking.so /usr/local/lib/
+	@install -m 0755 ./libsensorsystem-networking.so /usr/local/lib/
 
 clean:
 	if [ -d ./dep ]; then rm -rf ./dep; fi
@@ -42,7 +42,7 @@ RF24:
 	@$(ECHO) installing RF24 library
 	@if [ ! -d ./dep/RF24 ]; then git clone https://github.com/nRF24/RF24.git ./dep/RF24; fi
 	@$(ECHO) building RF24 library
-	@if [ ! -d ./dep/RF24 ]; then cd ./dep/RF24 && make -silent all && sudo make -silent install; fi
+	@if [ ! -d ./dep/RF24 ]; then cd ./dep/RF24 && ./configure --driver=SPIDEV && make -silent all && sudo make -silent install; fi
 
 rf24radiotransmitter.o: ./src/rf24radiotransmitter.cpp ./src/rf24radiotransmitter.h ./src/radiotransmitter.h ./src/packet.h ./src/byte.h RF24
 	@$(ECHO) building $@
