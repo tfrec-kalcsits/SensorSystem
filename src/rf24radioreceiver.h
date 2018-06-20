@@ -5,9 +5,10 @@
 
 #ifndef ARDUINO
     #include "byte.h"
+    #include <RF24/RF24.h>
+#else
+	#include <RF24.h>
 #endif
-
-#include <RF24.h>
 
 /**
  * @brief Contains the driver class for the RF24 radio receiver.
