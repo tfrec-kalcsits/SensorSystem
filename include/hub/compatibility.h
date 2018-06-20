@@ -54,7 +54,7 @@ namespace sensorsystem::opt
 #error "Error: An implementation of optional is required."
 #endif
 
-
+/* NO SUPPORT WITH GCC 6
 #if __has_include(<variant>)
 #include <variant>
 namespace sensorsystem::var
@@ -72,3 +72,4 @@ namespace sensorsystem::var
 #else
 #error "Error: An implementation of variant is required."
 #endif
+*/

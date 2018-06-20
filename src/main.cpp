@@ -4,9 +4,9 @@
 #include <string>
 #include <queue>
 
-#include <sensorsystem-networking/radioreceiver.h>
-#include <sensorsystem-networking/rf24radioreceiver.h>
-#include <sensorsystem-networking/byte.h>
+#include <sensorsystem/networking/radioreceiver.h>
+#include <sensorsystem/networking/rf24radioreceiver.h>
+#include <sensorsystem/networking/byte.h>
 
 #include <hub/internet/internetdevice.h>
 #include <hub/storage/filestorage.h>
@@ -29,12 +29,14 @@ using std::queue;
 
 int main()
 {
-    struct requeust
+    struct request
     {
         enum Type {LOG, UPLOAD, CONNECT, TEST, DISCONNECT};
         Type type;
         opt::optional<Measurement> measurement;
     };
+    
+    CursesUI ui;
     
     //check if config file exists
     if(!fs::exists("~/.sensorsystem.ini"))
@@ -43,8 +45,7 @@ int main()
         return 1;
     }
 
-    CursesUI ui;
-    queue<requeust> request_queue;
+    queue<request> request_queue;
 
     //load config file
     ifstream config_file("~/.sensorsystem.ini");
@@ -62,7 +63,7 @@ int main()
     while(true)
     {
         //check for user input
-        if(auto input = ui.read(); ui)
+        if(auto input = ui.read())
         {
             if(*input == "quit")
             {
@@ -150,9 +151,9 @@ int main()
             processing = true;
             switch(request_queue.front().type)
             {
-                case request::CONNECT: bool_result = move(async([&](){return internet->connect();});
+                case request::CONNECT: bool_result = move(async([&](){return internet->connect();}));
                     break;
-                case request::LOG: bool_result = move(async([&](){return filestorage->recordMeasurementToFile(request_queue.front().measurement.value())}));
+                case request::LOG: bool_result = move(async([&](){return filestorage->recordMeasurementToFile(request_queue.front().measurement.value());}));
                     break;
                 case request::UPLOAD: bool_result = move(async([&](){return remotestorage->syncFiles();}));
                     break;

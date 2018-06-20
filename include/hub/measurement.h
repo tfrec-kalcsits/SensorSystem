@@ -3,6 +3,9 @@
 #include <string>
 #include <ctime>
 
+namespace sensorsystem
+{
+
 struct Measurement
 {
     float ambient, object, lux;
@@ -11,3 +14,5 @@ struct Measurement
 };
 
 tm getTimestamp();
+
+}

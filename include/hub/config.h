@@ -6,9 +6,6 @@
 #include <memory>
 #include <exception>
 
-#include <sensorsystem-networking/RadioReceiver.h>
-#include <sensorsystem-networking/RF24RadioReceiver.h>
-
 #include <hub/storage/filestorage.h>
 #include <hub/storage/remotestorage.h>
 #include <hub/internet/internetdevice.h>
@@ -19,8 +16,9 @@ namespace sensorsystem
 
 class NoSectionError : public std::runtime_error
 {
-    NoSectionError(const string& what);
-}
+	public:
+    NoSectionError(const std::string& what);
+};
 
 class Config
 {
@@ -28,7 +26,7 @@ class Config
     Config(std::ifstream& infile);
     std::unique_ptr<RadioReceiver> getRadio();
     std::unique_ptr<RemoteStorage> getRemoteStorage();
-    std::unique_ptr<FileStorage> getLocalStorage();
+    std::unique_ptr<FileStorage> getFileStorage();
     std::unique_ptr<InternetDevice> getInternetDevice();
 
     private:

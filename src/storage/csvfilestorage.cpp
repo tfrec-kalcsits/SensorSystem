@@ -7,7 +7,7 @@ namespace sensorsystem
 {
 
 CSVFileStorage::CSVFileStorage(std::string prefix_path)
-    : prefix_path(prefix_path), {}
+    : prefix_path(prefix_path) {}
 
 bool CSVFileStorage::recordMeasurementToFile(const Measurement& measurement)
 {
