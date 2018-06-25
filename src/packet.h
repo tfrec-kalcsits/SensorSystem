@@ -9,6 +9,8 @@
  * @date 2018-05-21
  */
 
+#include <stdint.h>
+
 namespace sensorsystem
 {
 
@@ -19,7 +21,7 @@ namespace sensorsystem
 struct Packet
 {
     ///Enum used to specify the type of packet/command.
-    enum class Flag { LOG, UPLOAD, TEST, CONNECT, DISCONNECT};
+    enum class Flag : uint8_t { LOG, UPLOAD, TEST, CONNECT, DISCONNECT};
     
     ///The flag for the type of packet/command.
     Flag flag;
