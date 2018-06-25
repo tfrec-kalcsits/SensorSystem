@@ -36,4 +36,13 @@ void SensorCore::setSignature(char * signature)
         this->signature[i] = signature[i];
 }
 
+Measurement SensorCore::getMeasurement()
+{
+    float ambient = temp_sensor.getAmbientTemperature();
+    float object = temp_sensor.getObjectTemperature();
+    float light = light_sensor.getLux();
+
+    return {ambient, object, light};
+}
+
 }
