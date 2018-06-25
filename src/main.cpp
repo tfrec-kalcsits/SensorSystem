@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <queue>
+#include <iostream>
 
 #include <sensorsystem/networking/radioreceiver.h>
 #include <sensorsystem/networking/rf24radioreceiver.h>
@@ -19,12 +20,13 @@ using namespace sensorsystem;
 using std::unique_ptr;
 using std::async;
 using std::ifstream;
+using std::ofstream;
 using std::string;
 using std::future;
 using std::launch;
 using std::move;
 using std::queue;
-
+using std::cin;
 
 
 int main()
@@ -38,17 +40,16 @@ int main()
     
     CursesUI ui;
     
-    //check if config file exists
-    if(!fs::exists("~/.sensorsystem.ini"))
+    if(!fs::exists("/etc/sensorsystem-hub.ini"))
     {
-        ui.write("No config file found at ~/.sensorsystem.ini.");
+        ui.write("No config file found. File should be located at /etc/sensorsystem.ini");  
         return 1;
     }
 
     queue<request> request_queue;
 
     //load config file
-    ifstream config_file("~/.sensorsystem.ini");
+    ifstream config_file("/etc/sensorsystem-hub.ini");
     Config config(config_file);
     config_file.close();
 
@@ -118,15 +119,17 @@ int main()
                 case Packet::Flag::LOG: 
                     Measurement measurement = {packet.ambient_temperature,
                         packet.object_temperature, packet.lux, string(packet.signature), getTimestamp()};
-                    request_queue.push({request::LOG, {measurement}});
+                    request_queue.push({request::LOG, measurement});
                     break;
             }
         }
 
         if(processing)
         {
+		ui.write("processing request");
             if(bool_result.valid())
             {
+		    ui.write("process finished");
                 string type;
                 switch(request_queue.front().type)
                 {

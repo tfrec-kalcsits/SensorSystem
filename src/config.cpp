@@ -17,12 +17,12 @@ NoSectionError::NoSectionError(const std::string& what) : std::runtime_error(wha
 Config::Config(std::ifstream& infile)
 {
     std::string header = "";
-    std::regex header_match("^\\w+$"), value_match("^\\w+=\\w+?");
+    std::regex header_match("^\\[\\w+\\]"), value_match("^\\w+=[\\w/]+");
     std::string buffer;
     while(getline(infile, buffer))
     {
 		if(regex_match(buffer, header_match))
-			header = buffer.substr(1, buffer.size() - 1);
+			header = buffer.substr(1, buffer.size() - 2);
 		else if(regex_match(buffer, value_match))
 		{
 			if(header == "")
