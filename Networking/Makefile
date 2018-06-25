@@ -23,7 +23,7 @@ C = $(words $N)$(eval N := x $N)
 ECHO = echo "`expr " [\`expr $C '*' 100 / $T\`" : '.*\(....\)$$'`%]"
 endif
 
-.PHONY: all install
+.PHONY: all install     
 	
 all: libsensorsystem-networking.so
 	@$(ECHO) build complete
