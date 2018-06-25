@@ -30,7 +30,7 @@ struct Packet
     ///Each Packet will have a unique signature that will be recorded along with the measurements.
     ///This can be used for readability and to determine what the sensor was recording.
     char signature[10];
-};
+}__attribute__((__packed__));
 
 }
 
