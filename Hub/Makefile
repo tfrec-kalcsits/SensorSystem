@@ -72,7 +72,7 @@ measurement.o: ./src/measurement.cpp ./include/hub/measurement.h
 	@$(ECHO) Builing measurement.o
 	@$(OBJ_COMMAND)
 
-libsensorsystem-networking.so: librf24.so*
+$(NETWORKING_DIR)/libsensorsystem-networking.so: librf24.so*
 	@$(ECHO) Building Networking Library
 	@cd $(NETWORKING_DIR) && make -s
 	
