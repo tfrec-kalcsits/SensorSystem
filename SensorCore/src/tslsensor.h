@@ -1,8 +1,10 @@
 #ifndef SENSORSYSTEM_SENSOR_CORE_TSLSENSOR
 #define SENSORSYSTEM_SENSOR_CORE_TSLSENSOR
 
-#include <Adafruit_TSL2561_U.h>
-#include <Adafruit_Sensor.h>
+#ifdef ARDUINO
+    #include <Adafruit_TSL2561_U.h>
+    #include <Adafruit_Sensor.h>
+#endif
 
 #include "lightsensor.h"
 
@@ -19,7 +21,11 @@ class TSLSensor : public LightSensor
     bool begin();
 
     private:
+    #ifdef ARDUINO
     Adafruit_TSL2561_Unified sensor;
+    #else
+    void * tsl;
+    #endif
 };
 
 }

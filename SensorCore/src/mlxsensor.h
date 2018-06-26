@@ -22,7 +22,9 @@ class MLXSensor : public TempSensor
     static const uint8_t default_address = 0x5A;
 
     MLXSensor(uint8_t address = default_address);
+    #ifdef ARDUINO
     void begin();
+    #endif
     float getAmbientTemperature();
     float getObjectTemperature();
 
