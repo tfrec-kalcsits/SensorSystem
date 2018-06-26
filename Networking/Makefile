@@ -1,11 +1,11 @@
 CXXFLAGS = -std=c++1z
 LIBFLAGS = -shared -fPIC
 OBJECTS = rf24radiotransmitter.o rf24radioreceiver.o
-LIBS = $(RF24)/librf24.so
 OBJ_CMD = $(CXX) $(CXXFLAGS) -c $<
 REPO = ..
 RF24_INCLUDE = $(REPO)/thirdparty
 RF24_DIR = $(REPO)/thirdparty/RF24
+LIBS = $(RF24_DIR)/librf24.so
 
 ifneq ($(words $(MAKECMDGOALS)),1)
 .DEFAULT_GOAL = all

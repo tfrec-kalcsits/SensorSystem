@@ -2,8 +2,8 @@
 #include <sstream>
 #include <cstdint>
 #include <cstring>
-#include <sensorsystem/networking/radioreceiver.h>
-#include <sensorsystem/networking/rf24radioreceiver.h>
+#include <networking/radioreceiver.h>
+#include <networking/rf24radioreceiver.h>
 #include <hub/internet/wifiinternetdevice.h>
 #include <hub/config.h>
 #include <hub/storage/dropboxstorage.h>

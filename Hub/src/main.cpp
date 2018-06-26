@@ -5,9 +5,9 @@
 #include <queue>
 #include <iostream>
 
-#include <sensorsystem/networking/radioreceiver.h>
-#include <sensorsystem/networking/rf24radioreceiver.h>
-#include <sensorsystem/networking/byte.h>
+#include <networking/radioreceiver.h>
+#include <networking/rf24radioreceiver.h>
+#include <networking/byte.h>
 
 #include <hub/internet/internetdevice.h>
 #include <hub/storage/filestorage.h>
