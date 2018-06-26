@@ -20,10 +20,19 @@ Networking: RF24
 .PHONY: Networking
 
 RF24:
-	$(MAKE) -C thirdparty/RF24
+	@cd $(ROOTDIR)/RF24 && ./configure --driver=SPIDEV && $(MAKE)
 .PHONY: RF24
 
 install: $(SUBPROJECTS)
-	@for sub in $^; do \
+	@for x in $^; do \
 		$(MAKE) -C sub install; \
 	done
+
+clean:
+	rm -rf *.o
+	rm -rf *.so
+.PHONY: clean
+
+dist-clean: clean
+	rm -f /usr/local/lib/libsensorsystem-networking.so
+	rm -f /usr/local/bin/sensorsystem-hub
