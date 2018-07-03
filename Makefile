@@ -1,38 +1,40 @@
-export ROOTDIR = $(CURDIR)
-SUBPROJECTS = Hub Networking
+modules := Networking Hub
 
-export RF24_INCLUDE = $(ROOTDIR)/thirdparty/RF24
-export RF24_LIB = $(ROOTDIR)/thirdparty/RF24
+source_to_object = $(subst .c,.o, $(filter %.c, $1)) \
+				   $(subst .cpp,.o, $(filter %.cpp, $1))
 
-export Networking_INCLUDE = $(ROOTDIR)/Networking/src
-export Networking_LIB = $(ROOTDIR)/Networking
+libraries :=
+executables :=
+sources :=
+includes :=
 
-all: $(SUBPROJECTS)
+objects = $(call source_to_object, $(sources))
+dependencies = $(objects:.o=.d)
+
+lib_dir := lib
+bin_dir := bin
+thirdparty_dir := $(CURDIR)/thirdparty
+
+all:
+
+include $(thirdparty_dir)/thirdparty.mk $(addsuffix /module.mk,$(modules))
+-include $(dependencies)
+
 .PHONY: all
+all: $(libraries) $(executables)
 
-$(SUBPROJECTS):
-	$(MAKE) -C $@
-.PHONY: $(SUBPROJECTS)
+%.o: %.cpp
+	$(CXX) -c -MMD -MP $(includes) -o $@ $<
+	
+$(libraries)s: $(lib_dir)
+$(executables): $(bin_dir)
 
-Hub: Networking
+$(lib_dir) $(bin_dir) lib/:
+	@mkdir -p $@
+	
+	
+clean: thirdparty-clean
+	@rm -f $(objects) $(dependencies)
+	@rm -rf $(lib_dir)
+	@rm -rf $(bin_dir)
 
-Networking: RF24
-.PHONY: Networking
-
-RF24:
-	@cd $(ROOTDIR)/RF24 && ./configure --driver=SPIDEV && $(MAKE)
-.PHONY: RF24
-
-install: $(SUBPROJECTS)
-	@for x in $^; do \
-		$(MAKE) -C sub install; \
-	done
-
-clean:
-	rm -rf *.o
-	rm -rf *.so
-.PHONY: clean
-
-dist-clean: clean
-	rm -f /usr/local/lib/libsensorsystem-networking.so
-	rm -f /usr/local/bin/sensorsystem-hub

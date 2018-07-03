@@ -5,6 +5,9 @@
 
 
 #include <RF24.h>
+#ifndef ARDUINO
+	#include "byte.h"
+#endif
 
 
 /**
