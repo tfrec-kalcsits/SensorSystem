@@ -1,4 +1,4 @@
-modules := Networking Hub
+modules := Networking Hub SensorCore
 
 source_to_object = $(subst .c,.o, $(filter %.c, $1)) \
 				   $(subst .cpp,.o, $(filter %.cpp, $1))

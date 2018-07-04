@@ -3,8 +3,8 @@
 #ifdef ARDUINO
     #include <Wire.h>
 #else
-    #include <bcm2835.h>
-    #include "i2cerror.h"
+    #include <wiringPi.h>
+    #include <wiringPiI2C.h>
 #endif
 
 namespace sensorsystem
@@ -12,12 +12,14 @@ namespace sensorsystem
 
 MLXSensor::MLXSensor(uint8_t address) : address(address) {}
 
-#ifdef ARDUINO
 void MLXSensor::begin()
 {
+	#ifdef ARDUINO
         Wire.begin();
+    #else
+		fd = wiringPiI2CSetup(address);
+	#endif
 }
-#endif
 
 float MLXSensor::getAmbientTemperature()
 {
@@ -31,9 +33,8 @@ float MLXSensor::getObjectTemperature()
 
 float MLXSensor::readTemperature(Temperature type)
 {
-    uint16_t data;
-
     #ifdef ARDUINO
+		uint16_t data;
         Wire.beginTransmission(address);
         Wire.write(static_cast<uint8_t>(type));
         Wire.endTransmission(false);
@@ -44,27 +45,15 @@ float MLXSensor::readTemperature(Temperature type)
         uint8_t extra = Wire.read();
 
         float temp = (float)data * 0.02;
-        if(scale != Scale::KELVIN)
-            temp -= 273.15;
-        if(scale == Scale::FARENHEIT)
-            temp = (temp * 9 / 5) + 32;
-    #else
-        if(!bcm2835_init())
-            throw I2CError("Could not initialize bcm2835 library");
-        if(!bcm2835_i2c_begin())
-            throw I2CError("Could not initialize bcm2835 i2c connection.")
-        bcm2835_i2c_setSlaveAddress(static_cast<uint8_t> address);
-        char type_write = static_cast<char>(type);
-        bcm2835_i2c_write(&type_write, 1);
-        char buffer[6];
-        bcm2835_i2c_read_register_rs(&type_write, buffer, 3);
-        float temp = (((buffer[1] << 8) + buffer[0]) * 0.02) - 0.01;
-        if (scale != Scale::KELVIN)
-            temp -= 273.15;
-        if (scale == Scale::FARENHEIT)
-            temp = (temp * 9 / 5) + 32;
-    #endif
 
+    #else
+		float temp = wiringPiI2CReadReg16(fd, static_cast<int>(type)) * 0.02;
+    #endif
+    
+    if(scale != Scale::KELVIN)
+		temp -= 273.15;
+    if(scale == Scale::FARENHEIT)
+        temp = (temp * 9 / 5) + 32;
     return temp;
 }
 

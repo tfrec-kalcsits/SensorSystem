@@ -18,3 +18,16 @@ $(thirdparty_dir)/RF24_configured:
 	
 thirdparty-clean:
 	$(MAKE) -C $(thirdparty_dir)/RF24 clean
+	$(MAKE) -C $(thirdparty_dir)/wiringPi/wiringPi clean
+
+wiringPi_version := $(shell cat $(thirdparty_dir)/wiringPi/VERSION)
+wiringPi_libname := libwiringPi.so.$(wiringPi_version)
+
+includes += $(thirdparty_dir)/wiringPi/wiringPi
+libraries += $(lib_dir)/$(wiringPi_libname)
+
+$(lib_dir)/$(wiringPi_libname): wiringPi_ext
+
+.PHONY: wiringPi_ext
+wiringPi_ext:
+	$(MAKE) -C $(thirdparty_dir)/wiringPi/wiringPi

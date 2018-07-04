@@ -13,3 +13,6 @@
 [submodule "thirdparty/tsl2561"]
 	path = thirdparty/tsl2561
 	url = https://github.com/lexruee/tsl2561.git
+[submodule "thirdparty/wiringPi"]
+	path = thirdparty/wiringPi
+	url = git://git.drogon.net/wiringPi
