@@ -57,4 +57,9 @@ std::unique_ptr<TempSensor> Config::getTempSensor()
 	}
 }
 
+std::string Config::getSignature()
+{
+	return map["signature"]["signature"];
+}
+
 }

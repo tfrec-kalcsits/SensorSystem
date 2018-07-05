@@ -24,6 +24,7 @@ class Config
 	std::unique_ptr<RadioReceiver> getRadio();
 	std::unique_ptr<LightSensor> getLightSensor();
 	std::unique_ptr<TempSensor> getTempSensor();
+	std::string getSignature();
 
 	private:
 	std::unordered_map<std::string, std::unordered_map<std::string, std::string>> map;
