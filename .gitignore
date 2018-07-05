@@ -33,3 +33,8 @@
 
 #vscode setting files
 .vscode/
+/.vs
+/.vs/SensorSystem/v15/Browse.VC.db
+/.vs/SensorSystem/v15/Browse.VC.opendb
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
