@@ -1,4 +1,4 @@
-modules := Networking Hub SensorCore
+modules := Networking Hub SensorCore SensorPi
 
 source_to_object = $(subst .c,.o, $(filter %.c, $1)) \
 				   $(subst .cpp,.o, $(filter %.cpp, $1))
@@ -11,8 +11,8 @@ includes :=
 objects = $(call source_to_object, $(sources))
 dependencies = $(objects:.o=.d)
 
-lib_dir := lib
-bin_dir := bin
+lib_dir := ./lib
+bin_dir := ./bin
 thirdparty_dir := $(CURDIR)/thirdparty
 
 all:

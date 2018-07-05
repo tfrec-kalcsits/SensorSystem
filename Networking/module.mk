@@ -6,4 +6,4 @@ includes += -I./Networking/src
 libraries += $(lib_dir)/libsensorsystem-networking.so
 
 $(lib_dir)/libsensorsystem-networking.so: $(lib_dir)/$(RF24_libname) $(networking_objects)
-	$(CXX) -shared -fPIC -o $@ $(networking_objects) -L$(lib_dir) -lrf24
+	$(CXX) -shared -fPIC -o $@ $(networking_objects) $(lib_dir)/$(RF24_libname)

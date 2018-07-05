@@ -23,11 +23,23 @@ thirdparty-clean:
 wiringPi_version := $(shell cat $(thirdparty_dir)/wiringPi/VERSION)
 wiringPi_libname := libwiringPi.so.$(wiringPi_version)
 
-includes += $(thirdparty_dir)/wiringPi/wiringPi
+includes += -I$(thirdparty_dir)/wiringPi/wiringPi
 libraries += $(lib_dir)/$(wiringPi_libname)
 
 $(lib_dir)/$(wiringPi_libname): wiringPi_ext
+	@cp -u $(thirdparty_dir)/wiringPi/$(wiringPi_libname) $@
 
 .PHONY: wiringPi_ext
 wiringPi_ext:
 	$(MAKE) -C $(thirdparty_dir)/wiringPi/wiringPi
+	
+wiringPiDev_libname := libwiringPiDev.$(wiringPi_version)
+
+includes += -I$(thirdparty_dir)/wiringPi/devLib
+	
+$(lib_dir)/$(wiringPiDev_libname): wiringPiDev_ext
+	@cp -u $(thirdparty_dir)/wiringPi/devLib/$(wiringPiDev_libname) $@
+
+.PHONY: wiringPiDev_ext
+wiringPiDev_ext:
+	$(MAKE) -C $(thirdparty_dir)/wiringPi/devLib
