@@ -1,0 +1,5 @@
+project(SensorPi)
+add_executable(sensorsystem-sensor)
+target_include_directories(sensorsystem-sensor PUBLIC ${CMAKE_SOURCE_DIR}/SensorPi/include)
+target_link_libraries(sensorsystem-sensor sensorsystem-sensorcore ${wiringPi} ${wiringPiDev})
+add_subdirectory(src)
