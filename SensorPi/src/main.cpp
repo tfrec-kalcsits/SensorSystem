@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <wiringPi.h>
 
-#include <radioreceiver.h>
+#include <radiotransmitter.h>
 #include <tempsensor.h>
 #include <lightsensor.h>
 #include <packet.h>
@@ -102,31 +102,29 @@ void signatureMenu(LCDPlate& ui)
 	}
 }
 
-void formatReadings(float ambient, float object, float lux)
+string formatReadings(float ambient, float object, float lux)
 {
 	using std::stringstream;
 	using std::setprecision;
 	stringstream format;
-	format << steprecision(2) << "A: " << ambient
+	format << setprecision(2) << "A: " << ambient
 	       << " O: " << object << "\nLUX: "
 	       << lux;
 	return format.str();
 }
 
-void autolog(LCDPlate& ui, RadioReceiver& radio, TempSensor& temp_sensor, LightSensor& light_sensor)
+void autolog(LCDPlate& ui, RadioTransmitter& radio, TempSensor& temp_sensor, LightSensor& light_sensor)
 {
-	using std::chrono;
-	
 	ui.clear();
 	ui.move(0,0);
 	ui.print("AUTOLOG\nRUNNING");
-	auto interval = chrono::seconds(30);
-	auto start = chrono::system_clock::now();
+	auto interval = std::chrono::seconds(30);
+	auto start = std::chrono::system_clock::now();
 	while(!ui.isButtonPressed(LCDPlate::SELECT))
 	{
-		if(chrono::system_clock::now() > start + interval)
+		if(std::chrono::system_clock::now() > start + interval)
 		{
-			start = chrono::system_clock::now();
+			start = std::chrono::system_clock::now();
 			//send the temperature recordings
 			Packet packet;
 			packet.ambient_temperature = temp_sensor.getAmbientTemperature();
@@ -145,7 +143,7 @@ void autolog(LCDPlate& ui, RadioReceiver& radio, TempSensor& temp_sensor, LightS
 	}
 }
 
-Option menu(LCDPlate& ui, RadioReceiver& radio, float ambient, float object, float lux)
+Option menu(LCDPlate& ui, RadioTransmitter& radio, float ambient, float object, float lux)
 {
 	//get the option from the user
 	Option option = LOG;
@@ -154,9 +152,9 @@ Option menu(LCDPlate& ui, RadioReceiver& radio, float ambient, float object, flo
 		if(select = ui.isButtonPressed(LCDPlate::SELECT))
 			select = true;
 		else if(ui.isButtonPressed(LCDPlate::LEFT))
-			option = option == LOG ? QUIT : option--;
+			option = (Option)(option == LOG ? QUIT : (int)option - 1);
 		else if(ui.isButtonPressed(LCDPlate::RIGHT))
-			option = option == QUIT ? LOG : option++;
+			option = (Option)(option == QUIT ? LOG : (int)option + 1);
 		ui.clear();
 		ui.move(0,0);
 		ui.print(string("< ") + optionToString(option) + " >");
@@ -167,7 +165,7 @@ Option menu(LCDPlate& ui, RadioReceiver& radio, float ambient, float object, flo
 	{
 		ui.clear();
 		ui.move(0,0);
-		ui.print(radio.sendPacket(optionToPacket(option)) ? "Request sent\nsuccessfully" : "Request failed\nto send");
+		ui.print(radio.sendPacket(optionToPacket(option, ambient, object, lux)) ? "Request sent\nsuccessfully" : "Request failed\nto send");
 	}
 	else if(option == SIGNATURE)
 		signatureMenu(ui);
@@ -186,14 +184,14 @@ int main()
 	LCDPlate ui;
 	
 	//initialize configuration files
-	ifstream config_file("/etc/sensorsystem-sensor.ini")
+	ifstream config_file("/etc/sensorsystem-sensor.ini");
 	if(!config_file.good())
 		return 1;
 	Config config(config_file);
 	config_file.close();
 	
 	//load driver classes for hardware peripherals
-	unique_ptr<RadioReceiver> radio = config.getRadio();
+	unique_ptr<RadioTransmitter> radio = config.getRadio();
 	unique_ptr<LightSensor> light_sensor = config.getLightSensor();
 	unique_ptr<TempSensor> temp_sensor = config.getTempSensor();
 	signature = config.getSignature();
@@ -203,11 +201,11 @@ int main()
 	sleep(2);
 	
 	//start the main screen
-	for(bool quit = false; !quit;;)
+	for(bool quit = false; !quit;)
 	{
 		float ambient = temp_sensor->getAmbientTemperature();
 		float object = temp_sensor->getObjectTemperature();
-		float lux = temp_sensor->getLux();
+		float lux = light_sensor->getLux();
 		
 		//clear the screen
 		ui.clear();

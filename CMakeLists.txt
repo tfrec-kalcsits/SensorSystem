@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 
 option(INSTALL_DEPENDENCIES "Set on to install external dependencies located in thirdparty" ON)
 
-
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS -g)
 
 #install external dependencies if required
 if(INSTALL_DEPENDENCIES)

@@ -1,1 +1,0 @@
-target_sources(sensorsystem-hub helperfunctions.cpp wifiinternetdevice.cpp)

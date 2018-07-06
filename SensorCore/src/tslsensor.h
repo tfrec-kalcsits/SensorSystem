@@ -4,6 +4,8 @@
 #ifdef ARDUINO
     #include <Adafruit_TSL2561_U.h>
     #include <Adafruit_Sensor.h>
+#else
+	#include <cstdint>
 #endif
 
 #include "lightsensor.h"
@@ -25,6 +27,7 @@ class TSLSensor : public LightSensor
     Adafruit_TSL2561_Unified sensor;
     #else
     void * tsl;
+    uint8_t address;
     #endif
 };
 

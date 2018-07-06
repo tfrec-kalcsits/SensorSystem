@@ -1,5 +1,8 @@
-#include <SensorPi/config.h>
-#include <rf24radioreceiver.h>
+#include <regex>
+#include <cstring>
+
+#include <sensorpi/config.h>
+#include <rf24radiotransmitter.h>
 #include <mlxsensor.h>
 #include <tslsensor.h>
 
@@ -26,23 +29,17 @@ Config::Config(std::ifstream& infile)
 	}
 }
 
-std::unique_ptr<RadioReceiver> Config::getRadio()
+std::unique_ptr<RadioTransmitter> Config::getRadio()
 {
 	std::string type = map["radio"]["type"];
 	if (type == "RF24")
 	{
 		uint16_t ce = stoi(map["radio"]["ce"]);
 		uint16_t csn = stoi(map["radio"]["csn"]);
-		int num_pipes = 0;
-		byte pipe[6][6];
-		std::string buffer;
-		std::istringstream pipestream(map["radio"]["pipes"]);
-		while (getline(pipestream, buffer, ','))
-		{
-			strncpy((char*)pipe[num_pipes], buffer.data(), 6);
-			num_pipes++;
-		}
-		return std::unique_ptr<RadioReceiver>(new RF24RadioReceiver(ce, csn, pipe, num_pipes));
+		byte pipe[6];
+		strncpy((char*)pipe, map["radio"]["pipe"].c_str(), 6);
+		
+		return std::unique_ptr<RadioTransmitter>(new RF24RadioTransmitter(ce, csn, pipe));
 	}
 	return nullptr;
 }
@@ -55,11 +52,25 @@ std::unique_ptr<TempSensor> Config::getTempSensor()
 		int address = std::stoi(map["tempsensor"]["address"]);
 		return std::unique_ptr<TempSensor>(new MLXSensor(address));
 	}
+	return nullptr;
+}
+
+std::unique_ptr<LightSensor> Config::getLightSensor()
+{
+	std::string type = map["lightsensor"]["type"];
+	if (type == "TSL2561")
+	{
+		int address = std::stoi(map["lightsensor"]["address"]);
+		return std::unique_ptr<LightSensor>(new TSLSensor(address));
+	}
+	return nullptr;
 }
 
 std::string Config::getSignature()
 {
 	return map["signature"]["signature"];
 }
+
+NoSectionError::NoSectionError(const std::string& what) : std::runtime_error(what){}
 
 }

@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <string>
 
-#include <radioreceiver.h>
+#include <radiotransmitter.h>
 #include <lightsensor.h>
 #include <tempsensor.h>
 
@@ -21,7 +21,7 @@ class Config
 {
 	public:
 	Config(std::ifstream& infile);
-	std::unique_ptr<RadioReceiver> getRadio();
+	std::unique_ptr<RadioTransmitter> getRadio();
 	std::unique_ptr<LightSensor> getLightSensor();
 	std::unique_ptr<TempSensor> getTempSensor();
 	std::string getSignature();

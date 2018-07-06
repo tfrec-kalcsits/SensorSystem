@@ -3,9 +3,10 @@
 
 #include "radioreceiver.h"
 
-
-#include <RF24.h>
-#ifndef ARDUINO
+#ifdef ARDUINO
+	#include <RF24.h>
+#else
+	#include <RF24/RF24.h>
 	#include "byte.h"
 #endif
 

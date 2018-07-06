@@ -1,7 +1,7 @@
 #include <wiringPi.h>
 #include <mcp23017.h>
 #include <lcd.h>
-#include <pisensor/lcdui.h>
+#include <sensorpi/lcdplate.h>
 
 namespace sensorsystem
 {
