@@ -49,7 +49,10 @@ std::unique_ptr<TempSensor> Config::getTempSensor()
 	std::string type = map["tempsensor"]["type"];
 	if (type == "MLX90614")
 	{
-		int address = std::stoi(map["tempsensor"]["address"]);
+		std::string address_buf = map["lightsensor"]["address"];
+		if(address_buf == "")
+			return std::unique_ptr<TempSensor>(new MLXSensor());
+		int address = std::stoi(address_buf);
 		return std::unique_ptr<TempSensor>(new MLXSensor(address));
 	}
 	return nullptr;
@@ -60,7 +63,10 @@ std::unique_ptr<LightSensor> Config::getLightSensor()
 	std::string type = map["lightsensor"]["type"];
 	if (type == "TSL2561")
 	{
-		int address = std::stoi(map["lightsensor"]["address"]);
+		std::string address_buf = map["lightsensor"]["address"];
+		if(address_buf == "")
+			return std::unique_ptr<LightSensor>(new TSLSensor());
+		int address = std::stoi(address_buf);
 		return std::unique_ptr<LightSensor>(new TSLSensor(address));
 	}
 	return nullptr;
