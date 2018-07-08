@@ -1,6 +1,7 @@
 project(SensorCore)
-set(SensorCore_src_dir ${CMAKE_SOURCE_DIR}/SensorCore/src)
-set(sensorcore_sources ${SensorCore_src_dir}/i2cerror.cpp ${SensorCore_src_dir}/mlxsensor.cpp ${SensorCore_src_dir}/tslsensor.cpp ${tsl2561})
-add_library(sensorsystem-sensorcore STATIC ${sensorcore_sources})
-target_include_directories(sensorsystem-sensorcore PRIVATE ${tsl2561_include} PUBLIC ${SensorCore_src_dir})
-target_link_libraries(sensorsystem-sensorcore ${wiringPi})
+
+file(GLOB_RECURSE SENSORCORE_SRC src/*.cpp)
+add_library(sensorsystem-sensorcore STATIC ${SENSORCORE_SRC})
+add_dependencies(sensorsystem-sensorcore wiringPi tsl2561)
+target_include_directories(sensorsystem-sensorcore PRIVATE ${tsl2561_include} ${wiringPi_include} ${wiringPiDev_include} PUBLIC src)
+target_link_libraries(sensorsystem-sensorcore PRIVATE ${wiringPi_lib})

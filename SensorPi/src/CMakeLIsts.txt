@@ -1,1 +1,0 @@
-target_sources(sensorsystem-sensor config.cpp lcdplate.cpp main.cpp)

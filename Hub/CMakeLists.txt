@@ -1,10 +1,15 @@
 project(Hub)
 
-add_executable(sensorsystem-hub)
-target_link_libraries(sensorsystem-hub sensorsystem-networking)
-target_include_directories(${CMAKE_SOURCE_DIR}/Hub/include)
+#Find CURL and NCurses, both needed by sensorsystem-hub
+set(CURSES_USE_NCURSES TRUE)
+find_package(CURL REQUIRED)
+find_package(Curses REQUIRED)
 
-add_subdirectory(src)
+file(GLOB_RECURSE HUB_SRC src/*.cpp)
+
+add_executable(sensorsystem-hub ${HUB_SRC})
+target_link_libraries(sensorsystem-hub PRIVATE sensorsystem-networking ${CURSES_LIBRARIES})
+target_include_directories(sensorsystem-hub PRIVATE include ${CURSES_INCLUDE_DIR})
 
 install(TARGETS sensorsystem-hub DESTINATION bin COMPONENT Hub)
 
