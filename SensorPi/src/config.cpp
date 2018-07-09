@@ -1,5 +1,8 @@
-#include <SensorPi/config.h>
-#include <rf24radioreceiver.h>
+#include <regex>
+#include <cstring>
+
+#include <sensorpi/config.h>
+#include <rf24radiotransmitter.h>
 #include <mlxsensor.h>
 #include <tslsensor.h>
 
@@ -34,14 +37,9 @@ std::unique_ptr<RadioReceiver> Config::getRadio()
 		uint16_t ce = stoi(map["radio"]["ce"]);
 		uint16_t csn = stoi(map["radio"]["csn"]);
 		int num_pipes = 0;
-		byte pipe[6][6];
-		std::string buffer;
-		std::istringstream pipestream(map["radio"]["pipes"]);
-		while (getline(pipestream, buffer, ','))
-		{
-			strncpy((char*)pipe[num_pipes], buffer.data(), 6);
-			num_pipes++;
-		}
+		byte pipe[6];
+		strncpy(pipe, map["radio"]["pipe"].c_str(), 6);
+		
 		return std::unique_ptr<RadioReceiver>(new RF24RadioReceiver(ce, csn, pipe, num_pipes));
 	}
 	return nullptr;

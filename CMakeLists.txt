@@ -7,10 +7,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 #Build dependencies
-include(cmake/externaldependencies.cmake)
+include(cmake/systemdependencies.cmake)
 
 #add component subdirectories
-#add_subdirectory(thirdparty)
+add_subdirectory(thirdparty)
 add_subdirectory(Networking)
 add_subdirectory(SensorCore)
 add_subdirectory(SensorPi)
