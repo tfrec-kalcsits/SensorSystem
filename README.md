@@ -6,7 +6,8 @@ The following packages must be installed before compiling (Use sudo apt-get inst
 - libncurses5-dev
 - libcurl4-openssl-dev
 - wiringpi
-- i2c-tools libi2c-dev
+- i2c-tools
+- libi2c-dev
 
 The project also uses cmake as it's build system. To install cmake, use the command:
 
