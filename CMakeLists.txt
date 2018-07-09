@@ -1,26 +1,14 @@
 cmake_minimum_required(VERSION 3.0.0)
+project(SensorSystem)
 
-option(INSTALL_DEPENDENCIES "Set on to install external dependencies located in thirdparty" ON)
-
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS -g)
-
-#install external dependencies if required
-if(INSTALL_DEPENDENCIES)
-    project(SUPERBUILD NONE)
-    include(cmake/SuperBuild.cmake)
-    return()
-else()
-    project(SensorSystem)
-endif()
-
-#useful variables
-set(THIRDPARTY_DIR ${CMAKE_CURRENT_LIST_DIR}/thirdparty)
 
 #set output paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+#Build dependencies
+include(cmake/systemdependencies.cmake)
 
 #add component subdirectories
 add_subdirectory(thirdparty)

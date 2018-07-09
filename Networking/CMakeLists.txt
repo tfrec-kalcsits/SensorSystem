@@ -1,9 +1,9 @@
 project(Networking)
 
-set(networking_src_dir ${CMAKE_SOURCE_DIR}/Networking/src)
-add_library(sensorsystem-networking SHARED ${networking_src_dir}/rf24radioreceiver.cpp ${networking_src_dir}/rf24radiotransmitter.cpp)
-target_link_libraries(sensorsystem-networking ${RF24})
-target_include_directories(sensorsystem-networking PUBLIC ${networking_src_dir} PRIVATE ${RF24_include})
+add_library(sensorsystem-networking SHARED src/rf24radioreceiver.cpp src/rf24radiotransmitter.cpp)
+target_link_libraries(sensorsystem-networking PRIVATE ${RF24_LIB})
+target_include_directories(sensorsystem-networking PUBLIC src ${RF24_INCLUDE})
+
 
 install(TARGETS sensorsystem-networking DESTINATION lib COMPONENT Networking)
 
