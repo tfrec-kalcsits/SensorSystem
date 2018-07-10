@@ -7,12 +7,12 @@ namespace sensorsystem
 {
 
 LCDPlate::LCDPlate(int address) 
-	: address(address), handle(lcdInit(2, 16, 4, RS, E, DB4, DB5, DB6, DB7, 0,0,0,0))
 {
-	mcp23017Setup(BASE, 0x20);
+	mcp23017Setup(BASE, address);
 	pinMode(RED, OUTPUT);
 	pinMode(GREEN, OUTPUT);
 	pinMode(BLUE, OUTPUT);
+	setBacklight(true);
 
 	for (int i = 0; i <= 4; i++)
 	{
@@ -22,26 +22,42 @@ LCDPlate::LCDPlate(int address)
 
 	pinMode(RW, OUTPUT);
 	digitalWrite(RW, LOW);
+
+	handle = lcdInit(2, 16, 4, RS, E, DB4, DB5, DB6, DB7, 0,0,0,0);
+	clear();
+	home();
 }
 
-bool LCDPlate::isButtonPressed(Button button) const
+bool LCDPlate::isButtonPressed(Button button)
 {
 	return digitalRead(button) == HIGH;
 }
 
-void LCDPlate::print(std::string output) const
+void LCDPlate::print(std::string output)
 {
 	lcdPuts(handle, output.c_str());
 }
 
-void LCDPlate::move(int row, int col) const
+void LCDPlate::move(int row, int col)
 {
 	lcdPosition(handle, row, col);
 }
 
-void LCDPlate::clear() const
+void LCDPlate::clear()
 {
 	lcdClear(handle);
+}
+
+void LCDPlate::home()
+{
+	lcdHome(handle);
+}
+
+void LCDPlate::setBacklight(bool on)
+{
+	digitalWrite(RED, on);
+	digitalWrite(GREEN, on);
+	digitalWrite(BLUE, on);
 }
 
 }

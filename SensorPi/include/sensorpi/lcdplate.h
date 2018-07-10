@@ -14,17 +14,17 @@ class LCDPlate
 
 	LCDPlate(int address=base_i2c_address);
 
-	bool isButtonPressed(Button button) const;
-	void print(std::string output) const;
-	void move(int row, int col) const;
-	void clear() const;
+	void home();
+	bool isButtonPressed(Button button);
+	void print(std::string output);
+	void move(int row, int col);
+	void clear();
+	void setBacklight(bool on);
 	
-
 	private:
 	enum GPIO { BASE = 100, RED = BASE + 6, GREEN, BLUE, DB7, DB6, DB5, DB4, E, RW, RS};
 
-	const int address;
-	const int handle;
+	int handle;
 };
 
 }
