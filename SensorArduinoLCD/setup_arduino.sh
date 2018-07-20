@@ -18,5 +18,5 @@ fi
 
 sh $networking/setup_arduino.sh $lib_path
 sh $core/setup_arduino.sh $lib_path
-echo "SensorArduinoHeadless ready for installation. Please use the Arduino IDE to compile and upload to your device."
-exit 0
+rsync -a "$thirdparty/Adafruit-RGB-LCD-Shield-Library" "$lib_path/"
+echo "SensorArduinoLCD ready for installation. Plase use the Arduino IDE to compile and upload to your device."
