@@ -13,3 +13,6 @@
 [submodule "thirdparty/tsl2561"]
 	path = thirdparty/tsl2561
 	url = https://github.com/lexruee/tsl2561.git
+[submodule "thirdparty/Adafruit-RGB-LCD-Shield-Library"]
+	path = thirdparty/Adafruit-RGB-LCD-Shield-Library
+	url = https://github.com/adafruit/Adafruit-RGB-LCD-Shield-Library.git
