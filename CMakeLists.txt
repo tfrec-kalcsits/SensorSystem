@@ -1,6 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
 project(SensorSystem)
-
 
 #set output paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -14,5 +12,4 @@ include(cmake/systemdependencies.cmake)
 add_subdirectory(thirdparty)
 add_subdirectory(Networking)
 add_subdirectory(SensorCore)
-add_subdirectory(SensorPi)
 add_subdirectory(Hub)
