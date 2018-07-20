@@ -2,7 +2,7 @@ project(Networking)
 
 add_library(sensorsystem-networking SHARED src/rf24radioreceiver.cpp src/rf24radiotransmitter.cpp)
 target_link_libraries(sensorsystem-networking PRIVATE ${RF24_LIB})
-target_include_directories(sensorsystem-networking PUBLIC src ${RF24_INCLUDE})
+target_include_directories(sensorsystem-networking PUBLIC src PRIVATE ${RF24_INCLUDE})
 
 
 install(TARGETS sensorsystem-networking DESTINATION lib COMPONENT Networking)
