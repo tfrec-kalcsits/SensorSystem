@@ -24,6 +24,7 @@ char signature[10];
 
 void setup()
 {
+  Serial.begin(9600);
   // setup hardware devices
   radio = new RF24RadioTransmitter(7, 8, pipe);
   temp_sensor.begin();
@@ -50,6 +51,7 @@ void loop()
   {
     beginMainMenu(lcd, *radio, ambient, object, lux);
     initMainScreen(lcd);
+    printMainScreenMeasurements(lcd, ambient, object, lux);
   }
   delay(1000);
 }

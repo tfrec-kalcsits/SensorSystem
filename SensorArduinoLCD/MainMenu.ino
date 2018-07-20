@@ -40,7 +40,7 @@ void beginMainMenu(Adafruit_RGBLCDShield& lcd, RadioTransmitter& radio, float am
 
   switch(option)
   {
-    case SIGNATURE:
+    case SIGNATURE: Serial.print(newSignature(lcd, signature));
       break;
     case AUTOLOG:
       break;
@@ -97,6 +97,71 @@ Packet optionToPacket(Option option, float ambient, float object, float lux, cha
   packet.lux = lux;
   strncpy(packet.signature, signature, 10);
   return packet;
+}
+
+char * newSignature(Adafruit_RGBLCDShield& lcd, char * signature)
+{
+  //obtains a list of all available characters
+  //limited to a-z, 0-9, and space
+  char characters[37];
+  characters[0] = ' ';
+  for(int i = 0; i < 26; i++)
+    characters[i + 1] = 'a' + i;
+  for(int i = 0; i <= 9; i++)
+    characters[i + 27] = i + 48;
+
+  //new signature will be stored in an int array containing indexes to characters
+  int new_values[10];
+  new_values[0] = 1;
+  int index = 0;
+
+  lcd.clear();
+  lcd.home();
+  lcd.print("SET SIGNATURE");
+  lcd.setCursor(index, 1);
+  lcd.print('a');
+  lcd.setCursor(index, 1);
+  
+
+  for(uint8_t current_value = 1, button = waitForInput(lcd); !(button & BUTTON_SELECT); button = waitForInput(lcd))
+  {
+    if(button & BUTTON_LEFT && index > 0)
+    {
+      lcd.print(' ');
+      index--;
+      lcd.setCursor(index, 1);
+      current_value = new_values[index];
+    }
+    else if(button & BUTTON_RIGHT && index < 9)
+    {
+      index++;
+      current_value = 1;
+      lcd.setCursor(index, 1);
+      lcd.print(characters[current_value]);
+      lcd.setCursor(index, 1);
+      new_values[index] = current_value;
+    }
+    else if(button & BUTTON_UP)
+    {
+      current_value = current_value == 36 ? 0 : current_value + 1;
+      lcd.print(characters[current_value]);
+      lcd.setCursor(index, 1);
+      new_values[index] = current_value;
+    }
+    else if(button & BUTTON_DOWN)
+    {
+      current_value = current_value == 0 ? 36 : current_value - 1;
+      lcd.print(characters[current_value]);
+      lcd.setCursor(index, 1);
+      new_values[index] = current_value;
+    }
+  }
+  
+  for(int i = 0; i <= index; i++)
+    signature[i] = characters[new_values[i]];
+  if(index < 9) 
+    signature[index + 1] = '\0';
+  return signature;
 }
 
 
