@@ -49,7 +49,7 @@ void loop()
   printMainScreenMeasurements(lcd, ambient, object, lux);
   if(lcd.readButtons() & BUTTON_SELECT)
   {
-    beginMainMenu(lcd, *radio, ambient, object, lux);
+    runMainMenu(lcd, *radio, ambient, object, lux);
     initMainScreen(lcd);
     printMainScreenMeasurements(lcd, ambient, object, lux);
   }

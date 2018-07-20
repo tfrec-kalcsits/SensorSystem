@@ -3,13 +3,13 @@
 //This file contains functions defining the behavior of the main menu
 
 //An enum that represents the options of the menu
-enum Option { LOG, UPLOAD, CONNECT, DISCONNECT, SIGNATURE, AUTOLOG, RETURN };
+enum Option { LOG, UPLOAD, CONNECT, DISCONNECT, SIGNATURE, RETURN };
 
 void printOption(Adafruit_RGBLCDShield& lcd, Option option);
 Packet optionToPacket(Option option, float ambient, float object, float lux, char * signature);
 
 //starts the main menu
-void beginMainMenu(Adafruit_RGBLCDShield& lcd, RadioTransmitter& radio, float ambient, float object, float lux)
+void runMainMenu(Adafruit_RGBLCDShield& lcd, RadioTransmitter& radio, float ambient, float object, float lux)
 {
   lcd.clear();
   lcd.home();
@@ -40,9 +40,7 @@ void beginMainMenu(Adafruit_RGBLCDShield& lcd, RadioTransmitter& radio, float am
 
   switch(option)
   {
-    case SIGNATURE: Serial.print(newSignature(lcd, signature));
-      break;
-    case AUTOLOG:
+    case SIGNATURE: storeSignature(newSignature(lcd, signature));
       break;
     case RETURN:
       break;
@@ -66,8 +64,6 @@ void printOption(Adafruit_RGBLCDShield& lcd, Option option)
     case DISCONNECT: lcd.print(" < DISCONNECT >");
       break;
     case SIGNATURE: lcd.print(" < SIGNATURE >");
-      break;
-    case AUTOLOG: lcd.print("  < AUTOLOG >");
       break;
     case RETURN: lcd.print("  < RETURN >");
   }
