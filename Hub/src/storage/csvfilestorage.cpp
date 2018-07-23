@@ -23,9 +23,9 @@ bool CSVFileStorage::recordMeasurementToFile(const Measurement& measurement)
     std::ofstream file(path, exists ? std::ios::app : std::ios::out);
     
     if(!exists)
-        file << "date, time, signature, ambient, object, lux\n";
+        file << "time, signature, ambient, object, lux\n";
 
-    file << date << ", " << time_str << ", " << measurement.signature << ", "
+    file << time_str << ", " << measurement.signature << ", "
         << measurement.ambient << ", " << measurement.object << ", "
         << measurement.lux << std::endl;
 
