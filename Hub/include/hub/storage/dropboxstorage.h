@@ -14,9 +14,8 @@ class DropboxStorage : public RemoteStorage
     bool syncFiles() override;
 
     private:
-    const std::string oauth_access_token;
-    const std::string upload_path;
-    const std::string prefix_path;
+    std::string oauth_access_token;
+    std::string prefix_path;
 };
 
 std::vector<char> readFileBinary(sv::string_view path);

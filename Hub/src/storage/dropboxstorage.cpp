@@ -28,7 +28,7 @@ bool DropboxStorage::syncFiles()
             header = curl_slist_append(header, std::string("Dropbox-API-Arg: {\"path\": \"/" + file + "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false}").c_str());
             header = curl_slist_append(header, "Content-Type: application/octet-stream");
 
-            std::vector<char> raw_data = readFileBinary(file);
+            std::vector<char> raw_data = readFileBinary(prefix_path + file);
 
             CURL* curl = curl_easy_init();
             curl_easy_setopt(curl, CURLOPT_URL, "https://content.dropboxapi.com/2/files/upload");
@@ -39,6 +39,7 @@ bool DropboxStorage::syncFiles()
             curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl/7.52.1");
 
             fail = (curl_easy_perform(curl) != CURLE_OK);
+            
             
             curl_easy_cleanup(curl);
             curl_slist_free_all(header);

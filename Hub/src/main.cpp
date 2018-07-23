@@ -126,10 +126,10 @@ int main()
 
         if(processing)
         {
-		ui.write("processing request");
+		ui.write("processing request\n");
             if(bool_result.valid())
             {
-		    ui.write("process finished");
+				ui.write("process finished\n");
                 string type;
                 switch(request_queue.front().type)
                 {
@@ -145,7 +145,7 @@ int main()
                 }
                 processing = false;
                 request_queue.pop();
-                ui.write(type + " request " + (bool_result.get() ? "success" : "false"));
+                ui.write(type + " request " + (bool_result.get() ? "success\n" : "false\n"));
             }
         }
 

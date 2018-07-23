@@ -30,7 +30,7 @@ bool CSVFileStorage::recordMeasurementToFile(const Measurement& measurement)
         << measurement.lux << std::endl;
 
     std::string sync_file_path = prefix_path + ".sync";
-    std::ofstream(sync_file_path, fs::exists(sync_file_path) ? std::ios::out : std::ios::app) << path;
+    std::ofstream(sync_file_path, fs::exists(sync_file_path) ? std::ios::out : std::ios::app) << date << ".csv" << std::endl;
 
     return true;
 }
