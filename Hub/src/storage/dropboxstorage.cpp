@@ -5,8 +5,8 @@
 namespace sensorsystem
 {
 
-DropboxStorage::DropboxStorage(std::string oauth_access_token, std::string upload_path, std::string prefix_path)
-    : oauth_access_token(oauth_access_token), upload_path(upload_path), prefix_path(prefix_path){}
+DropboxStorage::DropboxStorage(std::string oauth_access_token, std::string prefix_path)
+    : oauth_access_token(oauth_access_token), prefix_path(prefix_path){}
 
 bool DropboxStorage::syncFiles()
 {
@@ -25,7 +25,7 @@ bool DropboxStorage::syncFiles()
         {
 			curl_slist* header = nullptr;
             header = curl_slist_append(header, std::string("Authorization: Bearer " + oauth_access_token).c_str());
-            header = curl_slist_append(header, std::string("Dropbox-API-Arg: {\"path\": \"" + upload_path + "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false}").c_str());
+            header = curl_slist_append(header, std::string("Dropbox-API-Arg: {\"path\": \"/" + file + "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false}").c_str());
             header = curl_slist_append(header, "Content-Type: application/octet-stream");
 
             std::vector<char> raw_data = readFileBinary(file);
@@ -36,6 +36,7 @@ bool DropboxStorage::syncFiles()
             curl_easy_setopt(curl, CURLOPT_HEADER, 1L);
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, raw_data.data());
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl/7.52.1");
 
             fail = (curl_easy_perform(curl) != CURLE_OK);
             

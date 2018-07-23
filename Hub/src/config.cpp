@@ -17,7 +17,7 @@ NoSectionError::NoSectionError(const std::string& what) : std::runtime_error(wha
 Config::Config(std::ifstream& infile)
 {
     std::string header = "";
-    std::regex header_match("^\\[\\w+\\]"), value_match("^\\w+=[\\w/]+");
+    std::regex header_match("^\\[\\w+\\]"), value_match("^\\w+=[\\w/\\-]+");
     std::string buffer;
     while(getline(infile, buffer))
     {
@@ -66,8 +66,7 @@ std::unique_ptr<RemoteStorage> Config::getRemoteStorage()
     {
         std::string oauth = map["remotestorage"]["oauth"];
         std::string localpath = map["filestorage"]["path"];
-        std::string remotepath = map["remotestorage"]["path"];
-        return std::unique_ptr<DropboxStorage>(new DropboxStorage(oauth, remotepath, localpath));
+        return std::unique_ptr<DropboxStorage>(new DropboxStorage(oauth, localpath));
     }
     return nullptr;
 }
