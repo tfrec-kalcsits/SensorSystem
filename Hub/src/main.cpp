@@ -4,9 +4,9 @@
 #include <string>
 #include <queue>
 #include <iostream>
+#include <chrono>
 
 #include <radioreceiver.h>
-#include <rf24radioreceiver.h>
 #include <byte.h>
 
 #include <hub/internet/internetdevice.h>
@@ -23,6 +23,7 @@ using std::ifstream;
 using std::ofstream;
 using std::string;
 using std::future;
+using std::future_status;
 using std::launch;
 using std::move;
 using std::queue;
@@ -124,29 +125,26 @@ int main()
             }
         }
 
-        if(processing)
+
+        if(processing && bool_result.wait_for(std::chrono::seconds(0)) == future_status::ready)
         {
-		ui.write("processing request\n");
-            if(bool_result.valid())
+			ui.write("process finished\n");
+            string type;
+            switch(request_queue.front().type)
             {
-				ui.write("process finished\n");
-                string type;
-                switch(request_queue.front().type)
-                {
-                    case request::CONNECT: type = "connect";
-                        break;
-                    case request::UPLOAD: type = "upload";
-                        break;
-                    case request::TEST: type = "request";
-                        break;
-                    case request::DISCONNECT: type = "disconnect";
-                        break;
-                    case request::LOG: type = "log";
-                }
-                processing = false;
-                request_queue.pop();
-                ui.write(type + " request " + (bool_result.get() ? "success\n" : "false\n"));
+                case request::CONNECT: type = "connect";
+                    break;
+                case request::UPLOAD: type = "upload";
+                    break;
+                case request::TEST: type = "request";
+                    break;
+                case request::DISCONNECT: type = "disconnect";
+                    break;
+                case request::LOG: type = "log";
             }
+            processing = false;
+            request_queue.pop();
+            ui.write(type + " request " + (bool_result.get() ? "success\n" : "false\n"));
         }
 
         if(!processing && !request_queue.empty())
@@ -164,6 +162,7 @@ int main()
                     break;
                 case request::DISCONNECT: bool_result = move(async([&](){return internet->disconnect();}));
             }
+            ui.write("processing request\n");
         }
     }
 

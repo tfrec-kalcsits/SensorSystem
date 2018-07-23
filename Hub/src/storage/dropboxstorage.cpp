@@ -2,6 +2,13 @@
 #include <curl/curl.h>
 #include <hub/storage/dropboxstorage.h>
 
+//dummy function to stop curl from outputting to console
+//code obtained from Ashaman at stackoverflow.com
+size_t write_data(void* buffer, size_t size, size_t nmemb, void* userp)
+{
+	return size * nmemb;
+}
+
 namespace sensorsystem
 {
 
@@ -16,7 +23,7 @@ bool DropboxStorage::syncFiles()
     while(getline(sync_file, buffer))
         unsynced_files.push_back(std::move(buffer));
     sync_file.close();
-    sync_file.open(prefix_path, std::ios::out);
+    sync_file.open(prefix_path + ".sync", std::ios::out | std::ios::trunc);
 
     bool fail = false;
     for(auto& file : unsynced_files)
@@ -37,6 +44,8 @@ bool DropboxStorage::syncFiles()
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, raw_data.data());
             curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl/7.52.1");
+            curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
 
             fail = (curl_easy_perform(curl) != CURLE_OK);
             
