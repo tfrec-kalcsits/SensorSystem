@@ -23,7 +23,7 @@ bool DropboxStorage::syncFiles()
     {
         if(!fail)
         {
-            curl_slist* header;
+			curl_slist* header = nullptr;
             header = curl_slist_append(header, std::string("Authorization: Bearer " + oauth_access_token).c_str());
             header = curl_slist_append(header, std::string("Dropbox-API-Arg: {\"path\": \"" + upload_path + "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false}").c_str());
             header = curl_slist_append(header, "Content-Type: application/octet-stream");
@@ -40,6 +40,7 @@ bool DropboxStorage::syncFiles()
             fail = (curl_easy_perform(curl) != CURLE_OK);
             
             curl_easy_cleanup(curl);
+            curl_slist_free_all(header);
         }
 
         if(fail)
