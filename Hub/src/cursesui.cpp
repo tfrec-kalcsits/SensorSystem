@@ -14,6 +14,7 @@ CursesUI::CursesUI()
     nodelay(in, TRUE);
     wmove(in, 0, 0);
     waddstr(in, "> ");
+    scrollok(out, TRUE);
     refresh();
 }
 
