@@ -9,18 +9,34 @@
 
 using namespace sensorsystem;
 
-#define MILLI_PER_MINUTE 60000.0f 
+#define MILLI_PER_MINUTE 60000.0f
+
+/************************** BEGIN USER CONFIGURATION **********************************************/
 
 //interval in minutes that the sensor will make a recording
-float log_interval = 0.5f;
+const float log_interval = 0.5f;
 
 //ce and csn pins for the RF24. Set these to wherever the pins are plugged in on the board
-uint16_t ce_pin = 7;
-uint16_t csn_pin = 8;
+const uint16_t ce_pin = 7;
+const uint16_t csn_pin = 8;
 
 //Write pipe address for RF24. Set this to one of the six read pipes of the Hub receiver radio
 //Change first byte to a number from 1-6 to change the pipe
-byte pipe[6] = "1Node";
+const byte pipe[6] = "1Node";
+
+//Each sensor can specify a signature to be recorded with measurements.
+//The signature is a C string of up to size 10.
+//Reset this line to set a custom signature.
+const char signature[10] = "ARDUINO";
+
+//This sets the scale that the temperature sensor will use.
+//The options are:
+//TempSensor::Scale::FARENHEIT
+//TempSensor::Scale::CELSIUS
+//TempSensor::Scale::KELVIN
+const TempSensor::Scale scale = TempSensor::Scale::CELSIUS;
+
+/********************* END USER CONFIGURATION ***************************************************/
 
 RadioTransmitter * radio;
 
@@ -30,15 +46,11 @@ RadioTransmitter * radio;
 MLXSensor temp_sensor;
 TSLSensor light_sensor;
 
-//Each sensor can specify a signature to be recorded with measurements.
-//The signature is a C string of up to size 10.
-//Reset this line to set a custom signature.
-char signature[10] = "ARDUINO";
-
 void setup() {
   //temp_sensor.begin() and light_sensor.begin() need to be called in order to initialize I2C communication
   radio = new RF24RadioTransmitter(7, 8, pipe); 
   temp_sensor.begin();
+  temp_sensor.setScale(scale);
   light_sensor.begin();
 
   //Initialize Serial communication. This will be used for debugging purposes.
