@@ -2,6 +2,7 @@
 #include <sensorpi/ui.h>
 #include <packet.h>
 #include <cstring>
+#include <unistd.h>
 
 namespace sensorsystem
 {
@@ -87,7 +88,13 @@ void runMainMenu(int lcd_handle, RadioTransmitter& radio, float ambient, float o
     {
         case RETURN:
             break;
-        default: radio.sendPacket(optionToPacket(option, ambient, object, lux, signature));
+        default: lcdClear(lcd_handle);
+	    lcdHome(lcd_handle);
+            lcdPuts(lcd_handle, "REQUEST");
+	    lcdPosition(lcd_handle, 0, 1);
+	    lcdPuts(lcd_handle, radio.sendPacket( optionToPacket(option, ambient, object, lux, signature)) ? "SUCCESS" : "FAILURE");
+	    sleep(1);
+
     }
 }
 
