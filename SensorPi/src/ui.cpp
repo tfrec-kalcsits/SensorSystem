@@ -2,7 +2,6 @@
 #include <wiringPi.h>
 #include <mcp23017.h>
 #include <lcd.h>
-#include <iostream>
 
 //functions taken from lcd-adafruit.c in wiringPi
 
@@ -60,9 +59,7 @@ void printMainScreenMeasurements(int handle, float ambient, float object, float 
     lcdPosition(handle, 2, 1);
     lcdPrintf(handle, "%.2f", object);
     lcdPosition(handle, 10,1);
-    lcdPrintf(handle, "%.2f", lux);
-    
-    std::cout << object << std::endl;
+    lcdPrintf(handle, "%.1f", lux);
 }
 
 bool isButtonPressed(int handle, uint8_t button)
@@ -82,6 +79,7 @@ void waitForRelease(int handle)
 uint8_t waitForInput(int handle)
 {
     for(;;)
+    {
         if(isButtonPressed(handle, AF_UP))
             return AF_UP;
         if(isButtonPressed(handle, AF_DOWN))
@@ -92,6 +90,7 @@ uint8_t waitForInput(int handle)
             return AF_LEFT;
         if(isButtonPressed(handle, AF_SELECT))
             return AF_SELECT;
+	}
 }
 
 }

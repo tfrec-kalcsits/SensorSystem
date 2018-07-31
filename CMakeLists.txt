@@ -18,3 +18,6 @@ add_subdirectory(Networking)
 add_subdirectory(SensorCore)
 add_subdirectory(Hub)
 add_subdirectory(SensorPi)
+
+#Run ldconfig on linux so program can find libraries
+install(CODE "execute_process(COMMAND ldconfig)")
