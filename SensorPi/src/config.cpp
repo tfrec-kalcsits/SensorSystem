@@ -7,6 +7,8 @@
 #include <mlxsensor.h>
 #include <tslsensor.h>
 
+#include <sensorpi/config.h>
+
 namespace sensorsystem
 {
 
@@ -42,8 +44,8 @@ std::unique_ptr<RadioTransmitter> Config::getRadio()
        uint16_t ce = stoi(map["radio"]["ce"]);
        uint16_t csn = stoi(map["radio"]["csn"]);
        byte pipe[6];
-       strncpy((char*)pipe, map["radio"]["pipe"], 6);
-       return std::unique_ptr(new RF24RadioTransmitter(ce, csn, pipe));
+       strncpy((char*)pipe, map["radio"]["pipe"].c_str(), 6);
+       return std::unique_ptr<RadioTransmitter>(new RF24RadioTransmitter(ce, csn, pipe));
     }
     return nullptr;
 }
@@ -51,10 +53,10 @@ std::unique_ptr<RadioTransmitter> Config::getRadio()
 std::unique_ptr<LightSensor> Config::getLightSensor()
 {
     std::string type = map["lightsensor"]["type"];
-    if(type = "TSL2561")
+    if(type == "TSL2561")
     {
         std::string address_string = map["lightsensor"]["address"];
-        std::unique_ptr<TSLSensor> ptr(address_string == "" ? new TSLSensor() : new TSLSensor(stoi(address_string));
+        std::unique_ptr<TSLSensor> ptr(address_string == "" ? new TSLSensor() : new TSLSensor(stoi(address_string)));
         ptr->begin();
         return std::move(ptr);
     }
@@ -64,10 +66,10 @@ std::unique_ptr<LightSensor> Config::getLightSensor()
 std::unique_ptr<TempSensor> Config::getTempSensor()
 {
     std::string type = map["tempsensor"]["type"];
-    if(type = "MLX90614")
+    if(type == "MLX90614")
     {
         std::string address_string = map["tempsensor"]["address"];
-        std::unique_ptr<MLXSensor> ptr(address_string == "" ? new MLXSensor() : new MLXSensor(stoi(address_string));
+        std::unique_ptr<MLXSensor> ptr(address_string == "" ? new MLXSensor() : new MLXSensor(stoi(address_string)));
         ptr->begin();
         std::string scale = map["tempsensor"]["scale"];
         if(scale == "farenheit")

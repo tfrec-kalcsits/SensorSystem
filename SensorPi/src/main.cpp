@@ -1,11 +1,13 @@
-#include <ifstream>
+#include <fstream>
 #include <iostream>
 #include <string>
 
 #include <unistd.h>
+#include <wiringPi.h>
 
 #include <sensorpi/ui.h>
 #include <sensorpi/config.h>
+#include <sensorpi/mainmenu.h>
 
 using namespace sensorsystem;
 using std::ifstream;
@@ -15,6 +17,8 @@ using std::string;
 
 int main()
 {
+	wiringPiSetupSys();
+	
     //initial setup
     ifstream config_file("/etc/sensorsystem-sensor.ini");
     if(!config_file.good())
@@ -30,7 +34,7 @@ int main()
     auto temp_sensor = config.getTempSensor();
     string signature = config.getSignature();
 
-    int lcd_handle = lcdInit();
+    int lcd_handle = initLCD();
     initMainScreen(lcd_handle);
 
     //main loop
@@ -42,7 +46,7 @@ int main()
         printMainScreenMeasurements(lcd_handle, ambient, object, lux);
         if(isButtonPressed(lcd_handle, AF_SELECT))
         {
-            runMainMenu(lcd_handle, *radio, ambient, object, lux);
+            runMainMenu(lcd_handle, *radio, ambient, object, lux, signature);
             initMainScreen(lcd_handle);
             printMainScreenMeasurements(lcd_handle, ambient, object, lux);
         }

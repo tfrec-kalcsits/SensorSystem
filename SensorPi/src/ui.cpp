@@ -2,6 +2,7 @@
 #include <wiringPi.h>
 #include <mcp23017.h>
 #include <lcd.h>
+#include <iostream>
 
 //functions taken from lcd-adafruit.c in wiringPi
 
@@ -37,7 +38,7 @@ static int adafruitLCDSetup (int colour)
   return lcdInit (2, 16, 4, AF_RS, AF_E, AF_DB4,AF_DB5,AF_DB6,AF_DB7, 0,0,0,0) ;
 }
 
-int LCDInit()
+int initLCD()
 {
     mcp23017Setup(AF_BASE, 0x20);
     return adafruitLCDSetup(7); 
@@ -47,25 +48,29 @@ void initMainScreen(int handle)
 {
     lcdClear(handle);
     lcdHome(handle);
-    lcdPrintf("A:\nO:      L:");
+    lcdPuts(handle, "A:");
+    lcdPosition(handle, 0, 1);
+    lcdPuts(handle, "O:      L:");
 }
 
 void printMainScreenMeasurements(int handle, float ambient, float object, float lux)
 {
     lcdPosition(handle, 2, 0);
     lcdPrintf(handle, "%.2f", ambient);
-    lcdPosition(2, 1);
+    lcdPosition(handle, 2, 1);
     lcdPrintf(handle, "%.2f", object);
-    lcdPosition(10,1);
+    lcdPosition(handle, 10,1);
     lcdPrintf(handle, "%.2f", lux);
+    
+    std::cout << object << std::endl;
 }
 
 bool isButtonPressed(int handle, uint8_t button)
 {
-    return digitalRead(button) == HIGH;
+    return digitalRead(button) == LOW;
 }
 
-void waitForRelease()
+void waitForRelease(int handle)
 {
     while(isButtonPressed(handle, AF_UP)
         || isButtonPressed(handle, AF_DOWN)

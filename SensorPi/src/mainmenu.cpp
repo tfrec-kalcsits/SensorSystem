@@ -6,7 +6,7 @@
 namespace sensorsystem
 {
 
-enum Option {LOG, UPLOAD, CONNECT, DISCONNECT, RETURN };
+enum Option : int {LOG, UPLOAD, CONNECT, DISCONNECT, RETURN };
 
 static Packet optionToPacket(Option option, float ambient, float object, float lux, const std::string& signature)
 {
@@ -21,7 +21,7 @@ static Packet optionToPacket(Option option, float ambient, float object, float l
             break;
         case DISCONNECT: flag = Packet::Flag::DISCONNECT;
             break;
-        default;
+        default:
             break;
     }
 
@@ -36,8 +36,8 @@ static Packet optionToPacket(Option option, float ambient, float object, float l
 
 static void printOption(int lcd, Option option)
 {
-    lcdClear(lcd_handle);
-    lcdHome(lcd_handle);
+    lcdClear(lcd);
+    lcdHome(lcd);
     switch(option)
     {
         case LOG: lcdPuts(lcd, "    < LOG >");
@@ -48,18 +48,16 @@ static void printOption(int lcd, Option option)
             break;
         case DISCONNECT: lcdPuts(lcd, " < DISCONNECT >");
             break;
-        case SIGNATURE: lcdPuts(lcd, " < SIGNATURE >");
-            break;
         case RETURN: lcdPuts(lcd, "  < RETURN >");
     }
 }
 
-void runMainMenu(int lcd_handle, RadioTransmitter& radio, float ambient, float object, float lux, const std::string& signature);
+void runMainMenu(int lcd_handle, RadioTransmitter& radio, float ambient, float object, float lux, const std::string& signature)
 {
     lcdClear(lcd_handle);
     lcdHome(lcd_handle);
     lcdPuts(lcd_handle, "   MAIN MENU");
-    wairForRelease(lcd_handle);
+    waitForRelease(lcd_handle);
     lcdClear(lcd_handle);
     lcdHome(lcd_handle);
 
@@ -71,15 +69,15 @@ void runMainMenu(int lcd_handle, RadioTransmitter& radio, float ambient, float o
         uint8_t button = waitForInput(lcd_handle);
         if(button == AF_LEFT)
         {
-            option = option == LOG ? RETURN : option - 1;
+            option = option == LOG ? RETURN : (Option)(option - 1);
             printOption(lcd_handle, option);
         }
         else if(button == AF_RIGHT)
         {
-            option = option == RETURN ? LOG : option + 1;
+            option = option == RETURN ? LOG : (Option)(option + 1);
             printOption(lcd_handle, option);
         }
-        else if(button & BUTTON_SELECT)
+        else if(button == AF_SELECT)
         {
             break;
         }
