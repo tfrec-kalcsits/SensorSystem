@@ -2,7 +2,7 @@ project(thirdparty)
 
 #build RF24 lib at configure time
 message("building dependency RF24")
-execute_process(COMMAND cd RF24 COMMAND ./configure --driver=SPIDEV COMMAND make)
+execute_process(WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/RF24 COMMAND ./configure COMMAND make)
 #set variables to be used by program
 set(RF24_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/RF24" PARENT_SCOPE)
 set(RF24_LIB ${CMAKE_CURRENT_LIST_DIR}/RF24/librf24.so.1.3.1 PARENT_SCOPE)

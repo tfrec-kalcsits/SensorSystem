@@ -12,3 +12,4 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 find_library(wiringPi wiringPi)
+find_library(wiringPiDev wiringPiDev)
