@@ -52,7 +52,7 @@ std::unique_ptr<RadioReceiver> Config::getRadio()
             strncpy((char*)pipe[num_pipes], buffer.data(), 6);
             num_pipes++;
         }
-        return std::unique_ptr<RadioReceiver>(new RF24RadioReceiver(ce, csn, pipe, num_pipes));
+		return std::make_unique<RF24RadioReceiver>(ce,csn,pipe,num_pipes);
     }
     return nullptr;
 }
@@ -66,8 +66,8 @@ std::unique_ptr<RemoteStorage> Config::getRemoteStorage()
     {
         std::string oauth = map["remotestorage"]["oauth"];
         std::string localpath = map["filestorage"]["path"];
-        return std::unique_ptr<DropboxStorage>(new DropboxStorage(oauth, localpath));
-    }
+		return std::make_unique<DropboxStorage>(oauth, localpath);
+	}
     return nullptr;
 }
 
@@ -77,7 +77,7 @@ std::unique_ptr<FileStorage> Config::getFileStorage()
     if(type == "CSV")
     {
         std::string path = map["filestorage"]["path"];
-        return std::unique_ptr<CSVFileStorage>(new CSVFileStorage(path));
+		return std::make_unique<CSVFileStorage>(path);
     }
     return nullptr;
 }
@@ -90,7 +90,7 @@ std::unique_ptr<InternetDevice> Config::getInternetDevice()
         std::string test_address = map["internet"]["testaddress"];
         if(test_address == "")
             test_address = "8.8.8.8";
-        return std::unique_ptr<InternetDevice>(new WifiInternetDevice(test_address));
+		return std::make_unique<WifiInternetDevice>(test_address);
     }
     return nullptr;
 }

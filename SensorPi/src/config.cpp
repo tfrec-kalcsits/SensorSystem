@@ -45,7 +45,7 @@ std::unique_ptr<RadioTransmitter> Config::getRadio()
        uint16_t csn = stoi(map["radio"]["csn"]);
        byte pipe[6];
        strncpy((char*)pipe, map["radio"]["pipe"].c_str(), 6);
-       return std::unique_ptr<RadioTransmitter>(new RF24RadioTransmitter(ce, csn, pipe));
+       return std::make_unique<RF24RadioTransmitter>(ce, csn, pipe);
     }
     return nullptr;
 }
@@ -56,7 +56,7 @@ std::unique_ptr<LightSensor> Config::getLightSensor()
     if(type == "TSL2561")
     {
         std::string address_string = map["lightsensor"]["address"];
-        std::unique_ptr<TSLSensor> ptr(address_string == "" ? new TSLSensor() : new TSLSensor(stoi(address_string)));
+		auto ptr = address_string == "" ? std::make_unique<TSLSensor>() : std::make_unique<TSLSensor>(stoi(address_string));
         ptr->begin();
         return std::move(ptr);
     }
@@ -69,7 +69,7 @@ std::unique_ptr<TempSensor> Config::getTempSensor()
     if(type == "MLX90614")
     {
         std::string address_string = map["tempsensor"]["address"];
-        std::unique_ptr<MLXSensor> ptr(address_string == "" ? new MLXSensor() : new MLXSensor(stoi(address_string)));
+        auto ptr = address_string == "" ? std::make_unique<MLXSensor>() : std::make_unique<MLXSensor>(stoi(address_string));
         ptr->begin();
         std::string scale = map["tempsensor"]["scale"];
         if(scale == "farenheit")
@@ -78,6 +78,7 @@ std::unique_ptr<TempSensor> Config::getTempSensor()
             ptr->setScale(TempSensor::Scale::KELVIN);
         return std::move(ptr);
     }
+	return nullptr;
 }
 
 std::string Config::getSignature()
