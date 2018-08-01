@@ -8,6 +8,10 @@ target_include_directories(sensorsystem-hub PRIVATE include ${CURSES_INCLUDE_DIR
 
 install(TARGETS sensorsystem-hub DESTINATION bin COMPONENT Hub)
 
+if(INSTALL_DEFAULT_CONFIG)
+	install(FILES data/sensorsystem-hub.ini DESTINATION /etc COMPONENT Hub
+endif()
+
 add_custom_target(Hub-install
     DEPENDS Networking-install
     COMMAND
