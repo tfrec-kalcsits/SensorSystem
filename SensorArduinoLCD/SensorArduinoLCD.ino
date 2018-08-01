@@ -7,10 +7,24 @@
 
 using namespace sensorsystem;
 
+/************************ USER CONFIGURATION ************************/
 //Write pipe address for RF24. Set this to one of the six read pipes
 //of the Hub receiver radio. Change the first byte to a number 1-6 to
 //change the pipe.
 const byte pipe[6] = "1Node";
+
+//Each sensor can specify a signature to be recorded with measurements.
+//The signature is a C string of up to size 10;
+char signature[10];
+
+//This sets the scale that the temperature sensor will use.
+//The options are:
+//TempSensor::Scale::FARENHEIT
+//TempSensor::Scale::CELSIUS
+//TempSensor::Scale::KELVIN
+TempSensor::Scale scale = TempSensor::Scale::CELSIUS;
+
+/********************** END USER CONFIGURATION ********************/
 
 RadioTransmitter * radio;
 MLXSensor temp_sensor;
@@ -18,9 +32,7 @@ TSLSensor light_sensor;
 
 Adafruit_RGBLCDShield lcd;
 
-//Each sensor can specify a signature to be recorded with measurements.
-//The signature is a C string of up to size 10;
-char signature[10];
+
 
 void setup()
 {
@@ -28,6 +40,7 @@ void setup()
   // setup hardware devices
   radio = new RF24RadioTransmitter(7, 8, pipe);
   temp_sensor.begin();
+  temp_sensor.setScale(scale);
   light_sensor.begin();
   lcd.begin(16, 2);
 

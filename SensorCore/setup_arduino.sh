@@ -17,8 +17,6 @@ fi
 echo "Installing Adafruit_Sensor library"
 rsync -a $thirdparty/Adafruit_Sensor "$lib_path/"
 echo "Installing Adafruit_TSL2561 library"
-rsync -a $thirdparty/Adafruit_TSL2561 "$lib_path/"
-echo "Installing Adafruit-MLX90614 library"
 rsync -a $thirdparty/Adafruit-MLX90614-Library "$lib_path/"
 echo "Installing SensorCore library"
 rsync -a . "$lib_path/"
