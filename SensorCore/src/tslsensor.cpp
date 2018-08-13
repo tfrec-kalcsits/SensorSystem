@@ -41,7 +41,12 @@ float TSLSensor::getLux()
         sensor.getEvent(&event);
         return event.light;
     #else
-        return tsl2561_lux(tsl);
+	//hacky workaround for issues using tsl2561 and mlx90614 at the
+	//same time. Future versions should fix this
+	float lux = 0.0f;
+	while(lux == 0.0f)
+            lux = tsl2561_lux(tsl);
+	return lux;
     #endif
 }
 
