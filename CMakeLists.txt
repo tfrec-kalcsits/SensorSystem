@@ -1,6 +1,9 @@
 project(SensorSystem)
 cmake_minimum_required(VERSION 3.7)
 
+#installs default config files to system
+option(INSTALL_DEFAULT_CONFIG "Install the default configuration files for the programs to /etc" OFF)
+
 #Max CXX standard in Version 3.7 is 14
 set(CMAKE_CXX_STANDARD 14)
 
