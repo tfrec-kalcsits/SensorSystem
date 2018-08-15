@@ -6,4 +6,6 @@ target_include_directories(sensorsystem-sensor PRIVATE include)
 target_link_libraries(sensorsystem-sensor sensorsystem-networking sensorsystem-sensorcore ${wiringPi} ${wiringPiDev})
 
 install(TARGETS sensorsystem-sensor DESTINATION bin COMPONENT Sensor)
-install(FILES data/sensorsystem-sensor.ini DESTINATION /etc COMPONENT Sensor)
+if(INSTALL_DEFAULT_CONFIG)
+	install(FILES data/sensorsystem-sensor.ini DESTINATION /etc COMPONENT Sensor)
+endif()
