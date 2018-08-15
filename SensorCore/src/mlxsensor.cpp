@@ -48,7 +48,7 @@ float MLXSensor::readTemperature(Temperature type)
 
     #else
 	wiringPiI2CWrite(fd, static_cast<int>(type));
-	float temp = wiringPiI2CReadReg16(fd, static_cast<int>(type)) * 0.02;
+	float temp = wiringPiI2CReadReg16(fd, static_cast<int>(type)) * 0.02; 
     #endif
     
     if(scale != Scale::KELVIN)

@@ -8,6 +8,7 @@
 #include <hub/config.h>
 #include <hub/storage/dropboxstorage.h>
 #include <hub/storage/csvfilestorage.h>
+#include <hub/internet/pppinternetdevice.h>
 
 namespace sensorsystem
 {
@@ -92,6 +93,14 @@ std::unique_ptr<InternetDevice> Config::getInternetDevice()
             test_address = "8.8.8.8";
 		return std::make_unique<WifiInternetDevice>(test_address);
     }
+	else if(type == "ppp")
+	{
+		std::string test_address = map["internet"]["testaddress"];
+		if(test_address == "")
+			test_address="8.8.8.8";
+		std::string peer = map["internet"]["peername"];
+		return std::unique_ptr<InternetDevice>(new PPPInternetDevice(peer, test_address));
+	}
     return nullptr;
 }
 
