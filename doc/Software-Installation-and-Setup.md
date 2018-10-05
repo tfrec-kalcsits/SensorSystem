@@ -90,4 +90,3 @@ This should be all you need to get started! For configuring the software, please
 [Next: Software Configurations](./Software-Configurations.md)
 
 [Prev: Configuring the Raspberry Pis](./Configuring-the-Raspberry-Pis.md)
-
