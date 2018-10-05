@@ -5,5 +5,5 @@ This Documentation will guide you through setting up your own sensors and device
 
 ### Index
 - [1. Hardware Setup Guide](./Hardware-Setup-Guide.md)
-- [2. Configuring the Raspberry Pis](./Configuring-the-Raspberry-Pis)
-- [2. Software Installation and Setup](./Software-Installation-and-Setup)
+- [2. Configuring the Raspberry Pis](./Configuring-the-Raspberry-Pis.md)
+- [3. Software Installation and Setup](./Software-Installation-and-Setup.md)
